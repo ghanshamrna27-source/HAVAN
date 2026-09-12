@@ -1,582 +1,704 @@
 import React, { useState } from 'react';
+import {
+  Image,
+  Palette,
+  CheckSquare,
+  FileText,
+  Sliders,
+  Sparkles,
+  Check,
+  ShieldCheck,
+  Music,
+  Share2,
+  Settings
+} from 'lucide-react';
 import { ARTWORKS } from '../data/artworks';
 import { THEMES } from '../data/themes';
-import { WAX_SEALS, FRAMING_BORDERS, DRESS_CODES, RSVP_PRESETS } from '../data/decorations';
-import { Palette, Sparkles, MessageSquareHeart, Award, Edit3, Image as ImageIcon } from 'lucide-react';
+import {
+  WAX_SEALS,
+  FRAMING_BORDERS,
+  DRESS_CODES,
+  RSVP_PRESETS,
+  PARTICLE_EFFECTS
+} from '../data/decorations';
+import { playPop, playWhoosh } from '../utils/soundEffects';
 
 export default function DesignSuite({
   currentArtwork,
   onSelectArtwork,
   currentTheme,
   onSelectTheme,
-  currentEffect,
-  onSelectEffect,
-  density,
-  onSelectDensity,
-  speed,
-  onSelectSpeed,
   currentSeal,
   onSelectSeal,
   currentBorder,
   onSelectBorder,
   currentDressCode,
   onSelectDressCode,
-  eventData,
-  onChangeEventData,
+  currentEffect,
+  onSelectEffect,
+  density,
+  onSelectDensity,
+  speed,
+  onSelectSpeed,
   rsvpOptions,
   onChangeRsvpOptions,
-  onToast
+  eventData,
+  onChangeEventData,
+  onOpenShare
 }) {
   const [activeTab, setActiveTab] = useState('artwork');
-  const [artCategory, setArtCategory] = useState('all');
 
-  const filteredArtworks = artCategory === 'all'
-    ? ARTWORKS
-    : ARTWORKS.filter(a => a.category === artCategory);
+  const handleTabClick = (tab) => {
+    playPop();
+    setActiveTab(tab);
+  };
 
-  const TABS = [
-    { id: 'artwork', label: 'Cover Art', icon: <ImageIcon size={16} /> },
-    { id: 'rsvp', label: 'RSVP Options', icon: <MessageSquareHeart size={16} /> },
-    { id: 'decorations', label: 'Seals & Borders', icon: <Award size={16} /> },
-    { id: 'themes', label: 'Themes', icon: <Palette size={16} /> },
-    { id: 'effects', label: 'Visual FX', icon: <Sparkles size={16} /> },
-    { id: 'copy', label: 'Edit Copy', icon: <Edit3 size={16} /> }
-  ];
+  const handleApplyPreset = (preset) => {
+    playPop();
+    onChangeRsvpOptions({
+      yes: { ...preset.yes },
+      maybe: { ...preset.maybe },
+      no: { ...preset.no }
+    });
+  };
+
+  const handleEventChange = (field, value) => {
+    onChangeEventData({
+      ...eventData,
+      [field]: value
+    });
+  };
+
+  const handleRsvpFieldChange = (choiceKey, subfield, value) => {
+    onChangeRsvpOptions({
+      ...rsvpOptions,
+      [choiceKey]: {
+        ...rsvpOptions[choiceKey],
+        [subfield]: value
+      }
+    });
+  };
+
+  const handleSelectArtworkWithSound = (art) => {
+    playWhoosh();
+    onSelectArtwork(art);
+  };
+
+  const handleSelectThemeWithSound = (th) => {
+    playPop();
+    onSelectTheme(th);
+  };
 
   return (
-    <div className="studio-editor-col">
+    <div className="design-suite-card">
+      {/* Tab Navigation */}
+      <div className="suite-tabs-nav">
+        <button
+          type="button"
+          onClick={() => handleTabClick('artwork')}
+          className={`suite-tab-btn ${activeTab === 'artwork' ? 'active' : ''}`}
+        >
+          <Image size={15} />
+          <span>Cover & Style</span>
+        </button>
 
-      {/* Navigation Tabs Header */}
-      <div className="editor-nav-bar">
-        {TABS.map(tab => (
-          <button
-            key={tab.id}
-            className={`editor-nav-tab ${activeTab === tab.id ? 'active' : ''}`}
-            onClick={() => setActiveTab(tab.id)}
-          >
-            {tab.icon}
-            <span>{tab.label}</span>
-          </button>
-        ))}
+        <button
+          type="button"
+          onClick={() => handleTabClick('themes')}
+          className={`suite-tab-btn ${activeTab === 'themes' ? 'active' : ''}`}
+        >
+          <Palette size={15} />
+          <span>Themes & FX</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => handleTabClick('rsvp')}
+          className={`suite-tab-btn ${activeTab === 'rsvp' ? 'active' : ''}`}
+        >
+          <CheckSquare size={15} />
+          <span>Custom RSVP</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => handleTabClick('details')}
+          className={`suite-tab-btn ${activeTab === 'details' ? 'active' : ''}`}
+        >
+          <FileText size={15} />
+          <span>Event Info</span>
+        </button>
       </div>
 
-      {/* ========================================================
-           TAB 1: COVER ARTWORK GALLERY
-           ======================================================== */}
-      {activeTab === 'artwork' && (
-        <div className="editor-card">
-          <div className="editor-card-header">
+      <div className="suite-tab-content">
+        {/* ================= TAB 1: COVER & STYLE ================= */}
+        {activeTab === 'artwork' && (
+          <>
             <div>
-              <h3 className="editor-title">1. Cover Artwork</h3>
-              <p className="editor-subtitle">Choose from 15 curated Sufi paintings & heritage pieces</p>
-            </div>
-            <span className="editor-counter-tag">{filteredArtworks.length} of {ARTWORKS.length} Shown</span>
-          </div>
-
-          <div className="category-tabs">
-            {[
-              { id: 'all', label: 'All (15)' },
-              { id: 'mystic', label: 'Mystic Dervish' },
-              { id: 'tribal', label: 'Tribal & Warli' },
-              { id: 'retro', label: 'Retro Pop' },
-              { id: 'classical', label: 'Classical & Jade' }
-            ].map(cat => (
-              <button
-                key={cat.id}
-                className={`category-tab ${artCategory === cat.id ? 'active' : ''}`}
-                onClick={() => setArtCategory(cat.id)}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="cover-grid">
-            {filteredArtworks.map(art => (
-              <div
-                key={art.id}
-                className={`cover-grid-item ${art.id === currentArtwork.id ? 'active' : ''}`}
-                onClick={() => onSelectArtwork(art)}
-                title={art.title}
-              >
-                <img src={art.src} alt={art.title} loading="lazy" />
-                <span className="cover-badge-mini">{art.tag}</span>
+              <div className="section-header">
+                <div className="section-title">
+                  <Image size={18} color="var(--accent-primary)" />
+                  <span>Choose Cover Artwork (13 Party Photos)</span>
+                </div>
+                <div className="section-sub">Live real-time preview</div>
               </div>
-            ))}
-          </div>
-        </div>
-      )}
 
-      {/* ========================================================
-           TAB 2: HOST-EDITABLE RSVP REPLIES ("Yes, No, Maybe")
-           ======================================================== */}
-      {activeTab === 'rsvp' && (
-        <div className="editor-card">
-          <div className="editor-card-header">
+              <div className="photo-gallery-grid">
+                {ARTWORKS.map((art) => {
+                  const isSelected = currentArtwork.id === art.id;
+                  return (
+                    <div
+                      key={art.id}
+                      onClick={() => handleSelectArtworkWithSound(art)}
+                      className={`photo-thumbnail-card ${isSelected ? 'selected' : ''}`}
+                      title={art.title}
+                    >
+                      <img src={art.src} alt={art.title} loading="lazy" />
+                      <div className="thumbnail-tag">{art.tag}</div>
+                      {isSelected && (
+                        <div className="thumbnail-check">
+                          <Check size={12} />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Seals & Badges */}
             <div>
-              <h3 className="editor-title">2. Customizable RSVP Reply Options</h3>
-              <p className="editor-subtitle">
-                As the invitation sender, customize the exact replies guests see and click for Yes, Maybe, and No.
-              </p>
-            </div>
-          </div>
-
-          {/* Quick Presets */}
-          <div className="rsvp-presets-strip">
-            <span className="rsvp-preset-label">Quick Presets:</span>
-            <div className="rsvp-preset-buttons">
-              {RSVP_PRESETS.map(preset => (
-                <button
-                  key={preset.id}
-                  className="rsvp-preset-pill"
-                  onClick={() => {
-                    onChangeRsvpOptions({
-                      yes: { ...preset.yes },
-                      maybe: { ...preset.maybe },
-                      no: { ...preset.no }
-                    });
-                    if (onToast) onToast(`Applied "${preset.name}" RSVP reply style`);
-                  }}
-                >
-                  {preset.yes.emoji} {preset.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Detailed Reply Customizer Grid */}
-          <div className="rsvp-customizer-grid">
-
-            {/* YES OPTION */}
-            <div className="rsvp-custom-box yes-box">
-              <div className="rsvp-box-header">
-                <span className="rsvp-status-tag tag-yes">1. Positive Reply (Yes / Going)</span>
+              <div className="section-header">
+                <div className="section-title">
+                  <Sparkles size={18} color="var(--accent-primary)" />
+                  <span>Party Badge / Monogram Stamp</span>
+                </div>
+                <div className="section-sub">Top right corner seal</div>
               </div>
-              <div className="rsvp-inputs-row">
-                <div className="form-group emoji-col">
-                  <label className="form-label">Emoji</label>
-                  <input
-                    type="text"
-                    className="form-input emoji-input"
-                    value={rsvpOptions.yes.emoji}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      yes: { ...rsvpOptions.yes, emoji: e.target.value }
-                    })}
-                    maxLength={4}
-                  />
-                </div>
-                <div className="form-group flex-1">
-                  <label className="form-label">Button Title</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={rsvpOptions.yes.title}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      yes: { ...rsvpOptions.yes, title: e.target.value }
-                    })}
-                    placeholder="E.g. Aana Hi Hai, I'll be there!"
-                  />
-                </div>
-                <div className="form-group sublabel-col">
-                  <label className="form-label">Sublabel</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={rsvpOptions.yes.sub}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      yes: { ...rsvpOptions.yes, sub: e.target.value }
-                    })}
-                    placeholder="Going"
-                  />
-                </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 10 }}>
+                {WAX_SEALS.map((s) => {
+                  const isSelected = currentSeal.id === s.id;
+                  return (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => {
+                        playPop();
+                        onSelectSeal(s);
+                      }}
+                      style={{
+                        background: isSelected ? 'var(--accent-soft)' : 'rgba(255, 255, 255, 0.03)',
+                        border: isSelected ? '1px solid var(--accent-primary)' : '1px solid var(--glass-border-subtle)',
+                        borderRadius: 'var(--radius-md)',
+                        padding: '10px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: 4,
+                        textAlign: 'center',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      <span style={{ fontSize: '1.6rem' }}>{s.icon}</span>
+                      <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#fff' }}>{s.name}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
-            {/* MAYBE OPTION */}
-            <div className="rsvp-custom-box maybe-box">
-              <div className="rsvp-box-header">
-                <span className="rsvp-status-tag tag-maybe">2. Tentative Reply (Maybe)</span>
-              </div>
-              <div className="rsvp-inputs-row">
-                <div className="form-group emoji-col">
-                  <label className="form-label">Emoji</label>
-                  <input
-                    type="text"
-                    className="form-input emoji-input"
-                    value={rsvpOptions.maybe.emoji}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      maybe: { ...rsvpOptions.maybe, emoji: e.target.value }
-                    })}
-                    maxLength={4}
-                  />
-                </div>
-                <div className="form-group flex-1">
-                  <label className="form-label">Button Title</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={rsvpOptions.maybe.title}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      maybe: { ...rsvpOptions.maybe, title: e.target.value }
-                    })}
-                    placeholder="E.g. Dil Hai, Thinking about it"
-                  />
-                </div>
-                <div className="form-group sublabel-col">
-                  <label className="form-label">Sublabel</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={rsvpOptions.maybe.sub}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      maybe: { ...rsvpOptions.maybe, sub: e.target.value }
-                    })}
-                    placeholder="Maybe"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* NO OPTION */}
-            <div className="rsvp-custom-box no-box">
-              <div className="rsvp-box-header">
-                <span className="rsvp-status-tag tag-no">3. Decline Reply (No)</span>
-              </div>
-              <div className="rsvp-inputs-row">
-                <div className="form-group emoji-col">
-                  <label className="form-label">Emoji</label>
-                  <input
-                    type="text"
-                    className="form-input emoji-input"
-                    value={rsvpOptions.no.emoji}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      no: { ...rsvpOptions.no, emoji: e.target.value }
-                    })}
-                    maxLength={4}
-                  />
-                </div>
-                <div className="form-group flex-1">
-                  <label className="form-label">Button Title</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={rsvpOptions.no.title}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      no: { ...rsvpOptions.no, title: e.target.value }
-                    })}
-                    placeholder="E.g. Alvida, Can't Make It"
-                  />
-                </div>
-                <div className="form-group sublabel-col">
-                  <label className="form-label">Sublabel</label>
-                  <input
-                    type="text"
-                    className="form-input"
-                    value={rsvpOptions.no.sub}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      no: { ...rsvpOptions.no, sub: e.target.value }
-                    })}
-                    placeholder="Can't Go"
-                  />
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <p className="rsvp-helper-hint">
-            💡 As you type or pick a preset above, the RSVP buttons on your invitation card to the left update simultaneously in real time.
-          </p>
-        </div>
-      )}
-
-      {/* ========================================================
-           TAB 3: DECORATIONS (WAX SEALS, BORDERS & DRESS CODES)
-           ======================================================== */}
-      {activeTab === 'decorations' && (
-        <div className="editor-card">
-          <div className="editor-card-header">
+            {/* Framing Borders */}
             <div>
-              <h3 className="editor-title">3. Invitation Embellishments</h3>
-              <p className="editor-subtitle">Add royal wax stamps, ornamental borders, and dress codes</p>
-            </div>
-          </div>
+              <div className="section-header">
+                <div className="section-title">
+                  <ShieldCheck size={18} color="var(--accent-primary)" />
+                  <span>Card Framing Border</span>
+                </div>
+              </div>
 
-          {/* Section A: Wax Seals */}
-          <div className="deco-sub-section">
-            <h4 className="deco-sub-title">Royal Wax Seals & Monogram Stamps</h4>
-            <div className="deco-grid">
-              {WAX_SEALS.map(s => (
-                <button
-                  key={s.id}
-                  className={`deco-btn ${s.id === currentSeal.id ? 'active' : ''}`}
-                  onClick={() => onSelectSeal(s)}
-                >
-                  <span className="deco-icon">{s.icon}</span>
-                  <div className="deco-info">
-                    <span className="deco-name">{s.name}</span>
-                    <span className="deco-desc">{s.desc}</span>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 10 }}>
+                {FRAMING_BORDERS.map((b) => {
+                  const isSelected = currentBorder.id === b.id;
+                  return (
+                    <button
+                      key={b.id}
+                      type="button"
+                      onClick={() => {
+                        playPop();
+                        onSelectBorder(b);
+                      }}
+                      style={{
+                        background: isSelected ? 'var(--accent-soft)' : 'rgba(255, 255, 255, 0.03)',
+                        border: isSelected ? '1px solid var(--accent-primary)' : '1px solid var(--glass-border-subtle)',
+                        borderRadius: 'var(--radius-md)',
+                        padding: '10px 12px',
+                        cursor: 'pointer',
+                        color: '#fff',
+                        fontSize: '0.78rem',
+                        fontWeight: 600,
+                        textAlign: 'left',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      <span>{b.name}</span>
+                      {isSelected && <Check size={14} color="var(--accent-primary)" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ================= TAB 2: THEMES & ATMOSPHERE ================= */}
+        {activeTab === 'themes' && (
+          <>
+            <div>
+              <div className="section-header">
+                <div className="section-title">
+                  <Palette size={18} color="var(--accent-primary)" />
+                  <span>Curated Party Color Palettes</span>
+                </div>
+                <div className="section-sub">Updates orbs, glow & cards</div>
+              </div>
+
+              <div className="theme-grid">
+                {THEMES.map((th) => {
+                  const isSelected = currentTheme.id === th.id;
+                  return (
+                    <div
+                      key={th.id}
+                      onClick={() => handleSelectThemeWithSound(th)}
+                      className={`theme-selector-card ${isSelected ? 'selected' : ''}`}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#fff' }}>{th.name}</span>
+                        {isSelected && <Check size={14} color="var(--accent-primary)" />}
+                      </div>
+
+                      <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+                        {th.tagline}
+                      </div>
+
+                      <div className="theme-color-dots">
+                        {th.orbs.map((color, i) => (
+                          <div key={i} className="color-dot" style={{ background: color }} />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Particle Effects */}
+            <div>
+              <div className="section-header">
+                <div className="section-title">
+                  <Sparkles size={18} color="var(--accent-primary)" />
+                  <span>Atmospheric Canvas Particles</span>
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 10 }}>
+                {PARTICLE_EFFECTS.map((fx) => {
+                  const isSelected = currentEffect === fx.id;
+                  return (
+                    <button
+                      key={fx.id}
+                      type="button"
+                      onClick={() => {
+                        playPop();
+                        onSelectEffect(fx.id);
+                      }}
+                      style={{
+                        background: isSelected ? 'var(--accent-soft)' : 'rgba(255, 255, 255, 0.03)',
+                        border: isSelected ? '1px solid var(--accent-primary)' : '1px solid var(--glass-border-subtle)',
+                        borderRadius: 'var(--radius-md)',
+                        padding: '10px 12px',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#fff' }}>{fx.name}</div>
+                      <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', marginTop: 2 }}>{fx.desc}</div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Sliders */}
+              <div className="form-row-2" style={{ marginTop: 16 }}>
+                <div className="input-group">
+                  <div className="input-label">
+                    <span>Particle Density:</span>
+                    <span style={{ color: 'var(--text-accent)' }}>{density}x</span>
                   </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Section B: Framing Borders */}
-          <div className="deco-sub-section" style={{ marginTop: 24 }}>
-            <h4 className="deco-sub-title">Framing Card Borders</h4>
-            <div className="deco-grid">
-              {FRAMING_BORDERS.map(b => (
-                <button
-                  key={b.id}
-                  className={`deco-btn ${b.id === currentBorder.id ? 'active' : ''}`}
-                  onClick={() => onSelectBorder(b)}
-                >
-                  <div className="deco-info">
-                    <span className="deco-name">{b.name}</span>
-                    <span className="deco-desc">{b.desc}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Section C: Dress Codes */}
-          <div className="deco-sub-section" style={{ marginTop: 24 }}>
-            <h4 className="deco-sub-title">Dress Code Suggestion</h4>
-            <div className="deco-grid">
-              {DRESS_CODES.map(d => (
-                <button
-                  key={d.id}
-                  className={`deco-btn ${d.id === currentDressCode.id ? 'active' : ''}`}
-                  onClick={() => onSelectDressCode(d)}
-                >
-                  <span className="deco-icon">{d.emoji}</span>
-                  <div className="deco-info">
-                    <span className="deco-name">{d.title}</span>
-                    <span className="deco-desc">{d.sub}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ========================================================
-           TAB 4: HERITAGE THEMES
-           ======================================================== */}
-      {activeTab === 'themes' && (
-        <div className="editor-card">
-          <div className="editor-card-header">
-            <div>
-              <h3 className="editor-title">4. Heritage Color Themes</h3>
-              <p className="editor-subtitle">Instant switching of ambient lighting, glass borders, and accents</p>
-            </div>
-          </div>
-
-          <div className="theme-preset-list">
-            {THEMES.map(t => (
-              <button
-                key={t.id}
-                className={`theme-preset ${t.id === currentTheme ? 'active' : ''}`}
-                onClick={() => onSelectTheme(t.id)}
-              >
-                <span className="theme-swatch" style={{ background: t.swatch }} />
-                <div className="theme-info">
-                  <span className="theme-name">{t.name}</span>
-                  <span className="theme-desc">{t.desc}</span>
+                  <input
+                    type="range"
+                    min="0.4"
+                    max="2.2"
+                    step="0.2"
+                    value={density}
+                    onChange={(e) => onSelectDensity(parseFloat(e.target.value))}
+                    style={{ accentColor: 'var(--accent-primary)' }}
+                  />
                 </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
-      {/* ========================================================
-           TAB 5: ATMOSPHERIC VISUAL EFFECTS
-           ======================================================== */}
-      {activeTab === 'effects' && (
-        <div className="editor-card">
-          <div className="editor-card-header">
-            <div>
-              <h3 className="editor-title">5. Atmospheric Floating Particles</h3>
-              <p className="editor-subtitle">60fps interactive canvas particles that drift and react to your mouse</p>
+                <div className="input-group">
+                  <div className="input-label">
+                    <span>Flow Speed:</span>
+                    <span style={{ color: 'var(--text-accent)' }}>{speed}x</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0.5"
+                    max="2.5"
+                    step="0.2"
+                    value={speed}
+                    onChange={(e) => onSelectSpeed(parseFloat(e.target.value))}
+                    style={{ accentColor: 'var(--accent-primary)' }}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
+          </>
+        )}
 
-          <div className="effect-list">
-            {[
-              { id: 'stardust', name: 'Cosmic Stardust', emoji: '✨' },
-              { id: 'embers', name: 'Lantern Embers', emoji: '🕯️' },
-              { id: 'petals', name: 'Sufi Rose Petals', emoji: '🌹' },
-              { id: 'meteors', name: 'Shooting Stars', emoji: '🌠' },
-              { id: 'bokeh', name: 'Mystic Bokeh', emoji: '🫧' },
-              { id: 'aurora', name: 'Aurora Rays', emoji: '🌌' },
-              { id: 'jasmine', name: 'Mogra Blossoms', emoji: '🌸' },
-              { id: 'soundwaves', name: 'Sound Waves', emoji: '⚡' },
-              { id: 'none', name: 'Off / Clean', emoji: '🚫' }
-            ].map(fx => (
-              <button
-                key={fx.id}
-                className={`effect-btn ${fx.id === currentEffect ? 'active' : ''}`}
-                onClick={() => onSelectEffect(fx.id)}
-              >
-                <span className="effect-emoji">{fx.emoji}</span>
-                <span className="effect-name">{fx.name}</span>
-              </button>
-            ))}
-          </div>
+        {/* ================= TAB 3: CUSTOM RSVP REPLIES ================= */}
+        {activeTab === 'rsvp' && (
+          <>
+            <div>
+              <div className="section-header">
+                <div className="section-title">
+                  <CheckSquare size={18} color="var(--accent-primary)" />
+                  <span>Sender-Customizable RSVP Buttons</span>
+                </div>
+                <div className="section-sub">Two-way live card binding</div>
+              </div>
 
-          {/* Density & Speed Sliders */}
-          <div className="fx-control-group" style={{ marginTop: 20 }}>
-            <div className="fx-control-row">
-              <span className="fx-control-label">Particle Density</span>
-              <div className="fx-pill-toggle-group">
-                {[
-                  { val: 0.5, label: 'Subtle' },
-                  { val: 1, label: 'Standard' },
-                  { val: 1.8, label: 'Euphoric' }
-                ].map(d => (
+              {/* Preset Quick Loader */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16, overflowX: 'auto', paddingBottom: 4 }}>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>Presets:</span>
+                {RSVP_PRESETS.map((p, i) => (
                   <button
-                    key={d.val}
-                    className={`fx-pill-toggle ${density === d.val ? 'active' : ''}`}
-                    onClick={() => onSelectDensity(d.val)}
+                    key={i}
+                    type="button"
+                    onClick={() => handleApplyPreset(p)}
+                    className="btn-secondary"
+                    style={{ fontSize: '0.74rem', padding: '6px 10px', whiteSpace: 'nowrap' }}
                   >
-                    {d.label}
+                    <span>{p.name}</span>
                   </button>
                 ))}
               </div>
-            </div>
 
-            <div className="fx-control-row">
-              <span className="fx-control-label">Drift Speed</span>
-              <div className="fx-pill-toggle-group">
-                {[
-                  { val: 0.5, label: 'Zen' },
-                  { val: 1, label: 'Normal' },
-                  { val: 1.7, label: 'Vivid' }
-                ].map(s => (
-                  <button
-                    key={s.val}
-                    className={`fx-pill-toggle ${speed === s.val ? 'active' : ''}`}
-                    onClick={() => onSelectSpeed(s.val)}
-                  >
-                    {d.label || s.label}
-                  </button>
-                ))}
+              {/* 3 RSVP Customizer Boxes */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                {/* YES */}
+                <div className="rsvp-customizer-box">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ fontSize: '1rem' }}>🟢</span>
+                    <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#fff' }}>"Going" Button Reply</span>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr 1fr', gap: 10 }}>
+                    <div className="input-group">
+                      <label className="input-label">Emoji</label>
+                      <input
+                        type="text"
+                        value={rsvpOptions.yes.emoji}
+                        onChange={(e) => handleRsvpFieldChange('yes', 'emoji', e.target.value)}
+                        className="input-field"
+                        style={{ textAlign: 'center', fontSize: '1.2rem' }}
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label className="input-label">Button Title</label>
+                      <input
+                        type="text"
+                        value={rsvpOptions.yes.title}
+                        onChange={(e) => handleRsvpFieldChange('yes', 'title', e.target.value)}
+                        className="input-field"
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label className="input-label">Subtitle</label>
+                      <input
+                        type="text"
+                        value={rsvpOptions.yes.sub}
+                        onChange={(e) => handleRsvpFieldChange('yes', 'sub', e.target.value)}
+                        className="input-field"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* MAYBE */}
+                <div className="rsvp-customizer-box">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ fontSize: '1rem' }}>🟡</span>
+                    <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#fff' }}>"Maybe" Button Reply</span>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr 1fr', gap: 10 }}>
+                    <div className="input-group">
+                      <label className="input-label">Emoji</label>
+                      <input
+                        type="text"
+                        value={rsvpOptions.maybe.emoji}
+                        onChange={(e) => handleRsvpFieldChange('maybe', 'emoji', e.target.value)}
+                        className="input-field"
+                        style={{ textAlign: 'center', fontSize: '1.2rem' }}
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label className="input-label">Button Title</label>
+                      <input
+                        type="text"
+                        value={rsvpOptions.maybe.title}
+                        onChange={(e) => handleRsvpFieldChange('maybe', 'title', e.target.value)}
+                        className="input-field"
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label className="input-label">Subtitle</label>
+                      <input
+                        type="text"
+                        value={rsvpOptions.maybe.sub}
+                        onChange={(e) => handleRsvpFieldChange('maybe', 'sub', e.target.value)}
+                        className="input-field"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* NO */}
+                <div className="rsvp-customizer-box">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ fontSize: '1rem' }}>🔴</span>
+                    <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#fff' }}>"Can't Go" Button Reply</span>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr 1fr', gap: 10 }}>
+                    <div className="input-group">
+                      <label className="input-label">Emoji</label>
+                      <input
+                        type="text"
+                        value={rsvpOptions.no.emoji}
+                        onChange={(e) => handleRsvpFieldChange('no', 'emoji', e.target.value)}
+                        className="input-field"
+                        style={{ textAlign: 'center', fontSize: '1.2rem' }}
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label className="input-label">Button Title</label>
+                      <input
+                        type="text"
+                        value={rsvpOptions.no.title}
+                        onChange={(e) => handleRsvpFieldChange('no', 'title', e.target.value)}
+                        className="input-field"
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label className="input-label">Subtitle</label>
+                      <input
+                        type="text"
+                        value={rsvpOptions.no.sub}
+                        onChange={(e) => handleRsvpFieldChange('no', 'sub', e.target.value)}
+                        className="input-field"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </>
+        )}
 
-      {/* ========================================================
-           TAB 6: EVENT COPY & DETAILS
-           ======================================================== */}
-      {activeTab === 'copy' && (
-        <div className="editor-card">
-          <div className="editor-card-header">
+        {/* ================= TAB 4: EVENT INFO LIVE FORM ================= */}
+        {activeTab === 'details' && (
+          <>
             <div>
-              <h3 className="editor-title">6. Event Details & Copy</h3>
-              <p className="editor-subtitle">Type in any field to simultaneously update the live invitation card</p>
-            </div>
-          </div>
+              <div className="section-header">
+                <div className="section-title">
+                  <FileText size={18} color="var(--accent-primary)" />
+                  <span>Event Details & Secret Venue Info</span>
+                </div>
+                <div className="section-sub">Instant live synchronization</div>
+              </div>
 
-          <div className="editor-form-grid">
-            <div className="form-group full-width">
-              <label className="form-label">Event Title</label>
-              <input
-                type="text"
-                className="form-input"
-                value={eventData.title}
-                onChange={(e) => onChangeEventData({ ...eventData, title: e.target.value })}
-                placeholder="E.g. Mehfil-e-Samaa"
-              />
-            </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <div className="form-row-2">
+                  <div className="input-group">
+                    <label className="input-label">Event Headline Title</label>
+                    <input
+                      type="text"
+                      value={eventData.title}
+                      onChange={(e) => handleEventChange('title', e.target.value)}
+                      className="input-field"
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label className="input-label">Host Name or Collective</label>
+                    <input
+                      type="text"
+                      value={eventData.host}
+                      onChange={(e) => handleEventChange('host', e.target.value)}
+                      className="input-field"
+                    />
+                  </div>
+                </div>
 
-            <div className="form-group full-width">
-              <label className="form-label">Subtitle / Hook</label>
-              <input
-                type="text"
-                className="form-input"
-                value={eventData.subtitle}
-                onChange={(e) => onChangeEventData({ ...eventData, subtitle: e.target.value })}
-                placeholder="Short spiritual tagline"
-              />
-            </div>
+                <div className="input-group">
+                  <label className="input-label">Tagline or Mood Hook</label>
+                  <input
+                    type="text"
+                    value={eventData.subtitle}
+                    onChange={(e) => handleEventChange('subtitle', e.target.value)}
+                    className="input-field"
+                  />
+                </div>
 
-            <div className="form-group">
-              <label className="form-label">Host Name</label>
-              <input
-                type="text"
-                className="form-input"
-                value={eventData.host}
-                onChange={(e) => onChangeEventData({ ...eventData, host: e.target.value })}
-              />
-            </div>
+                <div className="form-row-2">
+                  <div className="input-group">
+                    <label className="input-label">Date</label>
+                    <input
+                      type="text"
+                      value={eventData.date}
+                      onChange={(e) => handleEventChange('date', e.target.value)}
+                      className="input-field"
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label className="input-label">Time</label>
+                    <input
+                      type="text"
+                      value={eventData.time}
+                      onChange={(e) => handleEventChange('time', e.target.value)}
+                      className="input-field"
+                    />
+                  </div>
+                </div>
 
-            <div className="form-group">
-              <label className="form-label">Date</label>
-              <input
-                type="text"
-                className="form-input"
-                value={eventData.date}
-                onChange={(e) => onChangeEventData({ ...eventData, date: e.target.value })}
-              />
-            </div>
+                <div className="form-row-2">
+                  <div className="input-group">
+                    <label className="input-label">Dress Code Style</label>
+                    <select
+                      value={currentDressCode.id}
+                      onChange={(e) => {
+                        const dc = DRESS_CODES.find((d) => d.id === e.target.value);
+                        if (dc) {
+                          playPop();
+                          onSelectDressCode(dc);
+                        }
+                      }}
+                      className="select-field"
+                    >
+                      {DRESS_CODES.map((dc) => (
+                        <option key={dc.id} value={dc.id}>
+                          {dc.icon} {dc.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-            <div className="form-group">
-              <label className="form-label">Time</label>
-              <input
-                type="text"
-                className="form-input"
-                value={eventData.time}
-                onChange={(e) => onChangeEventData({ ...eventData, time: e.target.value })}
-              />
-            </div>
+                  <div className="input-group">
+                    <label className="input-label">BYOB / Food Note</label>
+                    <input
+                      type="text"
+                      value={eventData.byobNote}
+                      onChange={(e) => handleEventChange('byobNote', e.target.value)}
+                      className="input-field"
+                    />
+                  </div>
+                </div>
 
-            <div className="form-group">
-              <label className="form-label">Secret Venue</label>
-              <input
-                type="text"
-                className="form-input"
-                value={eventData.venue}
-                onChange={(e) => onChangeEventData({ ...eventData, venue: e.target.value })}
-              />
-            </div>
+                {/* Secret Venue Details */}
+                <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--glass-border-subtle)', borderRadius: 'var(--radius-md)', padding: 14 }}>
+                  <div style={{ fontSize: '0.84rem', fontWeight: 700, color: '#FFD700', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span>🔒 Secret Location Setup (Revealed after RSVP)</span>
+                  </div>
 
-            <div className="form-group full-width">
-              <label className="form-label">About This Evening</label>
-              <textarea
-                className="form-textarea"
-                rows={4}
-                value={eventData.description}
-                onChange={(e) => onChangeEventData({ ...eventData, description: e.target.value })}
-              />
-            </div>
+                  <div className="form-row-2">
+                    <div className="input-group">
+                      <label className="input-label">Venue / Place Name</label>
+                      <input
+                        type="text"
+                        value={eventData.venue}
+                        onChange={(e) => handleEventChange('venue', e.target.value)}
+                        className="input-field"
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label className="input-label">Gate / Door Code</label>
+                      <input
+                        type="text"
+                        value={eventData.doorCode}
+                        onChange={(e) => handleEventChange('doorCode', e.target.value)}
+                        className="input-field"
+                      />
+                    </div>
+                  </div>
 
-            <div className="form-group full-width">
-              <label className="form-label">Vibe Tags (Comma Separated)</label>
-              <input
-                type="text"
-                className="form-input"
-                value={eventData.vibeTags}
-                onChange={(e) => onChangeEventData({ ...eventData, vibeTags: e.target.value })}
-              />
+                  <div className="input-group" style={{ marginTop: 10 }}>
+                    <label className="input-label">Full Street Address (for Maps)</label>
+                    <input
+                      type="text"
+                      value={eventData.address}
+                      onChange={(e) => handleEventChange('address', e.target.value)}
+                      className="input-field"
+                    />
+                  </div>
+
+                  <div className="input-group" style={{ marginTop: 10 }}>
+                    <label className="input-label">Door Instructions / Buzzer</label>
+                    <input
+                      type="text"
+                      value={eventData.locationNotes}
+                      onChange={(e) => handleEventChange('locationNotes', e.target.value)}
+                      className="input-field"
+                    />
+                  </div>
+                </div>
+
+                {/* Event Description */}
+                <div className="input-group">
+                  <label className="input-label">Party Overview & Story</label>
+                  <textarea
+                    rows={3}
+                    value={eventData.description}
+                    onChange={(e) => handleEventChange('description', e.target.value)}
+                    className="textarea-field"
+                  />
+                </div>
+              </div>
             </div>
-          </div>
+          </>
+        )}
+
+        {/* Global Footer Actions */}
+        <div style={{ display: 'flex', gap: 12, paddingTop: 16, borderTop: '1px solid var(--glass-border-subtle)' }}>
+          <button
+            type="button"
+            onClick={() => {
+              playPop();
+              onOpenShare();
+            }}
+            className="btn-primary shimmer-hover"
+            style={{ flex: 1 }}
+          >
+            <Share2 size={16} />
+            <span>Export & Share Invitation</span>
+          </button>
         </div>
-      )}
-
+      </div>
     </div>
   );
 }

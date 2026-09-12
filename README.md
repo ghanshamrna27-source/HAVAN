@@ -1,66 +1,53 @@
-# 🌙 Mehfil — Sufi Music Invitation Studio (React)
+# 🎉 AFTERHOURS — House Party Interactive Invitation Studio
 
-An interactive, viral invitation studio for Sufi music nights, qawwalis, and soulful gatherings inspired by **Partiful**, **React Bits**, **Magic UI**, and **21st.dev**.
-
-Built with **React 18**, **Vite**, **Lucide Icons**, and **Canvas Confetti**.
+An interactive, high-converting house party invitation web application built with **React**, **Vite**, **Vanilla CSS**, and **Web Audio API**.
 
 ---
 
-## ✨ Features
+## ⚡ Quick Start
 
-- 🖥️ **Split-Screen Live Studio Layout**:
-  - **Left Side**: Sticky, real-time invitation card preview updating simultaneously as you edit.
-  - **Right Side**: Complete design & customization suite with zero modals or drawer back-and-forth.
-- 💌 **Host-Editable RSVP Replies ("Yes, No, Maybe")**:
-  - The invitation sender has full creative freedom to customize the exact reply options guests see.
-  - Custom buttons, emojis, titles, and sublabels (e.g. *"Zaroor Aayenge 💖"*, *"Dil Hai 🌙"*, *"Alvida 🙏"*).
-  - 1-click reply presets (*Sufi Baithak*, *Royal Courtyard*, *Classic Party*, *Ghazal & Shayari*).
-- 🎨 **15 Curated Sufi Artworks**:
-  - Categorized gallery (*Mystic Dervish*, *Tribal & Warli*, *Retro Pop*, *Classical & Jade*).
-  - Selecting any artwork automatically shifts matching color themes, atmospheric effects, and ambient lighting.
-- 🏅 **Royal Wax Seals & Monogram Stamps**:
-  - Embossed wax stamps (*Noor Crescent*, *Mor Pankh*, *Kamal Lotus*, *Shahi Mughal Crest*, *Sufi Chirag*).
-- 🖼️ **Framing Borders**:
-  - *Gold Filigree*, *Mughal Jali Lattice*, *Glass Line*, and *Cyber Neon*.
-- 🌈 **6 Heritage Color Themes**:
-  - *🌌 Mystic Samaa*, *🏺 Folk & Warli*, *🪩 Retro Qawwali*, *🍃 Jade & Silk*, *🌙 Noor-e-Kashmir*, and *🏜️ Desert Caravan*.
-- ✨ **8 Atmospheric Floating FX**:
-  - *Cosmic Stardust* (with cursor gravity), *Lantern Embers*, *Sufi Rose Petals*, *Shooting Stars / Meteors*, *Mystic Bokeh*, *Aurora Rays*, *Mogra Blossoms*, and *Sound Waves*.
-  - Real-time physics controls for particle **Density** and **Drift Speed**.
-- 🎶 **Web Audio API Tanpura Drone Synthesizer**:
-  - Live acoustic Indian drone (C#3 fundamental + G#3 fifth + harmonics) with animated wave visualizer.
-  - Singing bowl chime on RSVP confirmation.
-- 🎫 **Social & Event Mechanics**:
-  - Celebratory confetti burst on RSVP.
-  - Secret venue unlock with animated gold **Shine Border**.
-  - One-click `.ics` calendar file download.
-  - Wall of blessings with emoji reactions.
-
----
-
-## 🚀 Quick Start
-
-### 1. Install Dependencies
 ```bash
+# 1. Install dependencies
 npm install
-```
 
-### 2. Run Locally
-```bash
+# 2. Run local development server
 npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 3. Build for Production
-```bash
-npm run build
+# 3. Open in browser
+http://localhost:3001/
 ```
 
 ---
 
-## 🛠️ Tech Stack
-- **Framework**: React 18 + Vite
-- **Styling**: Vanilla CSS (Tokens, Glassmorphism, HSL Palettes)
-- **Icons**: Lucide React
-- **Celebration**: Canvas Confetti
-- **Sound**: Web Audio API (Dual oscillator bank + lowpass filter)
+## 🌟 Features
+
+- **13 House Party Cover Artworks**: High-resolution party photos categorized by mood (*Neon Rave, House Groove, Golden Hour, Late Night Talk, Outdoor Vibe, Retro Vinyl Lounge, Speakeasy, Boho Chill, Cyber Party, Secret Loft, Sunset Sessions, Warm Embers, Sunrise Crew*).
+- **Dual-Pane Real-Time Studio**:
+  - **Left Pane**: Sticky live card preview with mouse-tracking radial spotlight glow, 3D tilt perspective, wax seal monogram stamps, dynamic framing borders, shimmering title, countdown timer, and event chips.
+  - **Right Pane**: Tabbed customization suite for Cover Photos, 6 Curated Color Themes (*Neon Afterhours, Golden Hour Sunset, Cyber Velvet, Electric Blue, Emerald Rave, Midnight Disco 54*), 60fps HTML5 Canvas Particle Engine (*Disco Stardust, Neon Sparks, Laser Meteors, Warm Embers*), Two-Way bound RSVP Reply editor, and Live Event Details.
+- **Magic UI & React Bits Enhancements**:
+  - **Infinite Marquee Ticker**: Continuous scrolling party vibe ribbon with edge fade masks.
+  - **Magic UI BorderBeam**: Animated glowing laser beam running around the perimeter of the unlocked secret venue.
+  - **NumberTicker**: Smooth numerical roll-up for live attendance count.
+  - **Floating Reaction Emojis**: Live stream style floating reaction bursts (🔥, 🪩, 🍾, ⚡, 🍸, 🍕).
+- **High-Dopamine RSVP Acceptance**:
+  - Hardware-accelerated canvas confetti burst on RSVP confirmation.
+  - Unlocks the secret venue card, address, entry gate code (`CODE: #9042`), buzzer notes, and Google Maps directions link.
+- **In-Browser Web Audio Synthesizer**:
+  - Zero external MP3 files! Synthesizes deep house chords, sub-bass, and vibrato live in the browser with an animated waveform equalizer visualizer.
+  - Tactile micro-sound pops, chimes, and swooshes on user interactions.
+- **Share & Export Tools**:
+  - One-click RFC-compliant `.ics` Calendar file download.
+  - Direct Add to Google Calendar link.
+  - Ready-to-send formatted WhatsApp / SMS invitation text generator.
+- **Social Hype Wall**: Real-time interactive attendee feed with instant guest note posting.
+
+---
+
+## 🛠️ Built With
+
+- **React 19**
+- **Vite 6**
+- **Lucide Icons (`lucide-react`)**
+- **Canvas Confetti (`canvas-confetti`)**
+- **Web Audio API**

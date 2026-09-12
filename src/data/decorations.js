@@ -1,54 +1,52 @@
 export const WAX_SEALS = [
-  { id: 'seal-noor', name: 'Noor Crescent', icon: '☽', desc: 'Mystic moon stamp with golden aura', color: '#D4AF37' },
-  { id: 'seal-peacock', name: 'Mor Pankh', icon: '🦚', desc: 'Peacock feather of devotion', color: '#10B981' },
-  { id: 'seal-lotus', name: 'Kamal Lotus', icon: '🪷', desc: 'Sacred blooming lotus seal', color: '#F472B6' },
-  { id: 'seal-mughal', name: 'Shahi Crest', icon: '👑', desc: 'Royal Mughal imperial emblem', color: '#F59E0B' },
-  { id: 'seal-chirag', name: 'Sufi Chirag', icon: '🕯️', desc: 'Eternal flame of divine love', color: '#E85D3A' },
-  { id: 'seal-none', name: 'No Stamp', icon: '🚫', desc: 'Clean minimalist look', color: 'transparent' }
+  { id: 'disco-ball', name: 'Disco Ball', icon: '🪩', desc: 'Reflective mirrorball for late night dancers' },
+  { id: 'neon-bolt', name: 'Neon Bolt', icon: '⚡', desc: 'High voltage energy and electric rhythm' },
+  { id: 'martini', name: 'Martini Glass', icon: '🍸', desc: 'Craft cocktails, clinking glasses, and speakeasy style' },
+  { id: 'flame', name: 'Lit Flame', icon: '🔥', desc: 'Unstoppable hype and party ignition' },
+  { id: 'headphones', name: 'DJ Headphones', icon: '🎧', desc: 'Curated vinyl selectors and heavy bass' },
+  { id: 'pizza', name: 'Midnight Slice', icon: '🍕', desc: '2 AM snack fuel for party legends' }
 ];
 
 export const FRAMING_BORDERS = [
-  { id: 'border-filigree', name: 'Gold Filigree', class: 'border-filigree', desc: 'Ornamental royal golden lace trim' },
-  { id: 'border-jali', name: 'Mughal Jali', class: 'border-jali', desc: 'Geometric lattice arch border' },
-  { id: 'border-minimal', name: 'Glass Line', class: 'border-minimal', desc: 'Sleek frosted edge with subtle glow' },
-  { id: 'border-neon', name: 'Cyber Neon', class: 'border-neon', desc: 'Pulsing iridescent neon rim' },
-  { id: 'border-none', name: 'Simple', class: 'border-none', desc: 'Standard borderless card' }
+  { id: 'neon-cyber', name: 'Neon Cyber Rim', borderStyle: 'solid', borderWidth: '2px', hasGlow: true },
+  { id: 'frosted-glass', name: 'Frosted Glass Chamfer', borderStyle: 'solid', borderWidth: '1px', hasGlow: false },
+  { id: 'golden-vip', name: 'Golden VIP Trim', borderStyle: 'double', borderWidth: '3px', hasGlow: true },
+  { id: 'retro-polaroid', name: 'Polaroid Studio Frame', borderStyle: 'solid', borderWidth: '6px', hasGlow: false },
+  { id: 'dashed-ticket', name: 'VIP Ticket Notch', borderStyle: 'dashed', borderWidth: '2px', hasGlow: true }
 ];
 
 export const DRESS_CODES = [
-  { id: 'dress-white', title: 'Royal White Kurtas & Chikan', emoji: '👘', sub: 'Traditional baithak attire' },
-  { id: 'dress-shawl', title: 'Velvet Shawls & Pashmina', emoji: '🧣', sub: 'Warm winter soul gathering' },
-  { id: 'dress-ethnic', title: 'Vibrant Festive Ethnic', emoji: '✨', sub: 'Rich silks, kurtas & lehengas' },
-  { id: 'dress-boho', title: 'Soulful Bohemian / Linen', emoji: '🌿', sub: 'Earthy, relaxed comfort' }
+  { id: 'casual-chic', title: 'Casual Chic', subtitle: 'Effortless cool, sneakers & stylish jackets', icon: '👟' },
+  { id: 'neon-rave', title: 'Neon & Reflective', subtitle: 'Glow in the dark, bright pops & iridescent', icon: '✨' },
+  { id: 'all-black-vip', title: 'All Black Everything', subtitle: 'Sleek monochrome, leather & dark elegance', icon: '🖤' },
+  { id: '90s-retro', title: '90s Vintage / Grunge', subtitle: 'Baggy denim, band tees & retro shades', icon: '📼' },
+  { id: 'sunset-linen', title: 'Sunset Silks & Linen', subtitle: 'Breathable pastels, gold jewelry & breezy fits', icon: '🌅' }
 ];
 
 export const RSVP_PRESETS = [
   {
-    id: 'sufi',
-    name: 'Sufi Baithak',
-    yes: { emoji: '✨', title: 'Aana Hi Hai', sub: 'Going' },
-    maybe: { emoji: '🌙', title: 'Dil Hai', sub: 'Maybe' },
-    no: { emoji: '🙏', title: 'Alvida', sub: "Can't Go" }
+    name: 'Wild Party',
+    yes: { emoji: '🍾', title: "Hell Yeah, I'm In!", sub: 'Ready to rage' },
+    maybe: { emoji: '🍹', title: 'Might Slide Through', sub: 'Depends on the vibe' },
+    no: { emoji: '😴', title: 'FOMO Sleeping In', sub: "Can't make it" }
   },
   {
-    id: 'royal',
-    name: 'Royal Courtyard',
-    yes: { emoji: '👑', title: 'Qubool Hai', sub: 'Attending' },
-    maybe: { emoji: '🫖', title: 'Inshallah', sub: 'Tentative' },
-    no: { emoji: '🕊️', title: 'Maaf Kijiye', sub: 'Regrets' },
+    name: 'Classy House Warming',
+    yes: { emoji: '🥂', title: 'Count Me In!', sub: 'Bringing drinks' },
+    maybe: { emoji: '🤞', title: 'Trying My Best', sub: 'Checking schedule' },
+    no: { emoji: '💌', title: 'Sending Love', sub: 'Cheering from afar' }
   },
   {
-    id: 'classic',
-    name: 'Classic Party',
-    yes: { emoji: '🎉', title: 'Hell Yes!', sub: 'Going' },
-    maybe: { emoji: '🤔', title: 'Might Swing By', sub: 'Maybe' },
-    no: { emoji: '😢', title: "Can't Make It", sub: 'No' },
-  },
-  {
-    id: 'poetic',
-    name: 'Ghazal & Shayari',
-    yes: { emoji: '🌹', title: 'Hazir Honge', sub: 'Presence Confirmed' },
-    maybe: { emoji: '🕯️', title: 'Koshish Hai', sub: 'In Thought' },
-    no: { emoji: '💔', title: 'Majboori Hai', sub: 'In Spirit Only' },
+    name: 'Underground Jam',
+    yes: { emoji: '🎧', title: 'On The Guestlist', sub: 'Down for the music' },
+    maybe: { emoji: '🛹', title: 'Catch Me Late', sub: 'Dropping by past 11' },
+    no: { emoji: '✌️', title: 'Catch Next Time', sub: 'Locked out this time' }
   }
+];
+
+export const PARTICLE_EFFECTS = [
+  { id: 'stardust', name: 'Disco Stardust', desc: 'Floating golden & chromatic micro-stars' },
+  { id: 'sparks', name: 'Neon Sparks', desc: 'Electric upward energy motes' },
+  { id: 'meteors', name: 'Laser Meteors', desc: 'Diagonal shooting light streaks' },
+  { id: 'fireflies', name: 'Warm Ember Bokeh', desc: 'Gently drifting firefly orbs' }
 ];

@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import SpotlightCard from './SpotlightCard';
+import SecretVenue from './SecretVenue';
+import RSVPSection from './RSVPSection';
 import AudioPlayer from './AudioPlayer';
-import { Calendar, Clock, MapPin, Lock, Check, Send } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import HypeWall from './HypeWall';
+import Marquee from './Marquee';
+import FloatingReactions from './FloatingReactions';
+import { Calendar, Clock, Shirt, Sparkles, Flame, Share2, Music2 } from 'lucide-react';
+import { playPop, playWhoosh } from '../utils/soundEffects';
 
 export default function InviteCard({
   artwork,
@@ -12,331 +17,193 @@ export default function InviteCard({
   dressCode,
   eventData,
   rsvpOptions,
-  onToast
+  selectedStatus,
+  onSelectStatus,
+  guestCount,
+  guests,
+  onAddGuestMessage,
+  onOpenShare,
+  onCycleSeal
 }) {
-  const [rsvpStatus, setRsvpStatus] = useState(null);
-  const [guestCounts, setGuestCounts] = useState({ going: 24, maybe: 8 });
-  const [isVenueUnlocked, setIsVenueUnlocked] = useState(false);
-  const [comments, setComments] = useState([
-    { id: 1, name: 'Rumi K.', text: 'Can\'t wait! Bringing my handcrafted tabla 🥁', color: '#8B5CF6' },
-    { id: 2, name: 'Meera S.', text: 'Under the stars with chai & qawwali… this will be transcendent ✨🌙', color: '#EC4899' },
-    { id: 3, name: 'Kabir D.', text: 'White kurta ironed. Ready for the dervish ecstasy 🫖', color: '#10B981' }
-  ]);
-  const [commentInput, setCommentInput] = useState('');
+  const [reactionTrigger, setReactionTrigger] = useState(null);
+  const borderClass = framingBorder ? `frame-${framingBorder.id}` : 'frame-neon-cyber';
 
-  // Handle Guest RSVP
-  function handleRSVP(status) {
-    setRsvpStatus(status);
+  const triggerReaction = (emoji) => {
+    playPop();
+    setReactionTrigger({ emoji, timestamp: Date.now() });
+  };
 
-    if (status === 'going') {
-      setGuestCounts(prev => ({ ...prev, going: 25 }));
-      setIsVenueUnlocked(true);
-
-      // Trigger Confetti explosion
-      confetti({
-        particleCount: 120,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#D4AF37', '#FFD700', '#FF2A7A', '#00F5D4', '#8B5CF6', '#FFFFFF']
-      });
-
-      if (onToast) onToast(`✨ RSVP Confirmed: "${rsvpOptions.yes.title}"`);
-    } else if (status === 'maybe') {
-      setGuestCounts(prev => ({ ...prev, maybe: 9 }));
-      if (onToast) onToast(`🌙 Marked as "${rsvpOptions.maybe.title}"`);
-    } else {
-      if (onToast) onToast(`🙏 Marked as "${rsvpOptions.no.title}"`);
-    }
-  }
-
-  function handleAddComment(textToAdd = null) {
-    const text = textToAdd || commentInput.trim();
-    if (!text) return;
-    const newComment = {
-      id: Date.now(),
-      name: 'You',
-      text,
-      color: '#D4AF37'
-    };
-    setComments(prev => [...prev, newComment]);
-    if (!textToAdd) setCommentInput('');
-    if (onToast) onToast('✨ Blessing sent to the wall!');
-  }
-
-  // Calendar .ics download
-  function downloadCalendarInvite() {
-    const icsContent = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Mehfil//Sufi Music Invitation//EN',
-      'BEGIN:VEVENT',
-      'SUMMARY:' + eventData.title,
-      'DESCRIPTION:' + eventData.description.replace(/\n/g, ' '),
-      'LOCATION:' + eventData.venue,
-      'DTSTART:20261018T143000Z',
-      'DTEND:20261018T203000Z',
-      'STATUS:CONFIRMED',
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
-
-    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.setAttribute('download', `${eventData.title.toLowerCase().replace(/\s+/g, '-')}.ics`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    if (onToast) onToast('📅 Calendar event (.ics) downloaded!');
-  }
-
-  const hostInitial = eventData.host.trim().charAt(0).toUpperCase() || 'A';
-  const vibeTagList = eventData.vibeTags.split(',').map(t => t.trim()).filter(Boolean);
+  const handleSealClick = () => {
+    playWhoosh();
+    triggerReaction(seal.icon);
+    onCycleSeal();
+  };
 
   return (
-    <SpotlightCard className={`invite-card ${framingBorder.class || ''}`} id="inviteCard">
+    <div className="sticky-preview-col" style={{ position: 'relative' }}>
+      {/* Floating Reaction Emojis Overlay */}
+      <FloatingReactions triggerReaction={reactionTrigger} />
 
-      {/* Cover Art Section */}
-      <div className="cover-art-wrapper">
-        <img
-          src={artwork.src}
-          alt={artwork.title}
-          className="cover-art"
-          key={artwork.src}
-        />
-        <div className="cover-art-overlay"></div>
+      <SpotlightCard className={`invite-card-container ${borderClass}`}>
+        <div className="invite-card-inner">
+          {/* Hero Artwork Stage */}
+          <div className="card-hero-stage">
+            <img
+              src={artwork.src}
+              alt={artwork.title}
+              className="card-hero-image"
+              loading="eager"
+            />
+            <div className="hero-gradient-overlay" />
 
-        {/* Badges */}
-        <div className="cover-badge-strip">
-          <span className="cover-badge badge-live">✦ Live Mehfil</span>
-          <span className="cover-badge badge-limited">Limited 40 Seats</span>
-        </div>
-
-        {/* Decorative Royal Wax Seal / Monogram Stamp */}
-        {seal && seal.id !== 'seal-none' && (
-          <div className="royal-wax-seal" title={seal.desc} style={{ '--seal-color': seal.color }}>
-            <span className="seal-icon">{seal.icon}</span>
-            <span className="seal-label">{seal.name}</span>
-          </div>
-        )}
-      </div>
-
-      {/* Event Details Section */}
-      <div className="event-details">
-
-        {/* Host Bar */}
-        <div className="host-bar">
-          <div className="host-avatar-group">
-            <div className="host-avatar" style={{ background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))' }}>
-              <span>{hostInitial}</span>
-            </div>
-            <div className="host-info">
-              <span className="host-label">Hosted by</span>
-              <span className="host-name">{eventData.host}</span>
-            </div>
-          </div>
-          <div className="host-crown-badge" title="Host VIP">👑</div>
-        </div>
-
-        {/* Event Title & Subtitle */}
-        <div className="event-title-wrapper">
-          <h1 className="event-title shimmer">{eventData.title}</h1>
-        </div>
-        <p className="event-subtitle">{eventData.subtitle}</p>
-
-        {/* Date, Time & Location Strip */}
-        <div className="event-meta-strip">
-          <div className="meta-item">
-            <div className="meta-icon"><Calendar size={18} /></div>
-            <div className="meta-text">
-              <span className="meta-primary">{eventData.date}</span>
-              <span className="meta-secondary">{eventData.time}</span>
-            </div>
-          </div>
-
-          <div
-            className={`meta-item meta-location ${isVenueUnlocked ? 'location-unlocked shine-border' : ''}`}
-            onClick={() => {
-              if (!isVenueUnlocked && onToast) onToast('🔒 Please RSVP to unlock the secret venue location!');
-            }}
-          >
-            <div className="meta-icon"><MapPin size={18} /></div>
-            <div className="meta-text">
-              <span className={`meta-primary ${!isVenueUnlocked ? 'location-locked' : ''}`}>
-                {isVenueUnlocked ? '📍 Venue Unlocked!' : '📍 RSVP to unlock secret venue'}
-              </span>
-              <span className="meta-secondary">
-                {isVenueUnlocked ? eventData.venue : 'Private heritage courtyard revealed after RSVP'}
-              </span>
-            </div>
-            {!isVenueUnlocked && <div className="location-lock-icon"><Lock size={15} /></div>}
-          </div>
-        </div>
-
-        {/* Dress Code Badge (Decorations feature) */}
-        {dressCode && (
-          <div className="dress-code-strip">
-            <span className="dress-code-badge">
-              <span className="dress-emoji">{dressCode.emoji}</span>
-              <span className="dress-text">Dress Code: <strong>{dressCode.title}</strong></span>
-            </span>
-          </div>
-        )}
-
-        {/* Vibe Tags */}
-        <div className="vibe-tags">
-          {vibeTagList.map((tag, idx) => (
-            <span key={idx} className="vibe-tag">{tag}</span>
-          ))}
-        </div>
-
-        {/* ========================================================
-             RSVP SECTION WITH SENDER-EDITABLE REPLIES
-             ======================================================== */}
-        <div className="rsvp-section">
-          {!rsvpStatus ? (
-            <>
-              <p className="rsvp-prompt">Will you join the circle?</p>
-              <div className="rsvp-buttons">
-                {/* YES (Editable by sender) */}
-                <button
-                  className="rsvp-btn rsvp-going"
-                  onClick={() => handleRSVP('going')}
-                  title={`Reply: ${rsvpOptions.yes.title}`}
-                >
-                  <span className="rsvp-emoji">{rsvpOptions.yes.emoji}</span>
-                  <span className="rsvp-label">{rsvpOptions.yes.title}</span>
-                  <span className="rsvp-sublabel">{rsvpOptions.yes.sub}</span>
-                </button>
-
-                {/* MAYBE (Editable by sender) */}
-                <button
-                  className="rsvp-btn rsvp-maybe"
-                  onClick={() => handleRSVP('maybe')}
-                  title={`Reply: ${rsvpOptions.maybe.title}`}
-                >
-                  <span className="rsvp-emoji">{rsvpOptions.maybe.emoji}</span>
-                  <span className="rsvp-label">{rsvpOptions.maybe.title}</span>
-                  <span className="rsvp-sublabel">{rsvpOptions.maybe.sub}</span>
-                </button>
-
-                {/* NO (Editable by sender) */}
-                <button
-                  className="rsvp-btn rsvp-cant"
-                  onClick={() => handleRSVP('cant')}
-                  title={`Reply: ${rsvpOptions.no.title}`}
-                >
-                  <span className="rsvp-emoji">{rsvpOptions.no.emoji}</span>
-                  <span className="rsvp-label">{rsvpOptions.no.title}</span>
-                  <span className="rsvp-sublabel">{rsvpOptions.no.sub}</span>
-                </button>
+            {/* Top Bar: Tag & Wax Seal */}
+            <div className="hero-top-bar">
+              <div className="artwork-mood-badge">
+                <Sparkles size={12} color="var(--accent-secondary)" />
+                <span>{artwork.tag || 'House Party'}</span>
               </div>
-            </>
-          ) : (
-            <div className="rsvp-confirmed-section">
-              <div className="rsvp-confirmed-badge">
-                <span className="confirmed-check"><Check size={16} /></span>
-                <span className="confirmed-text">
-                  {rsvpStatus === 'going' && `${rsvpOptions.yes.title} ✨`}
-                  {rsvpStatus === 'maybe' && `${rsvpOptions.maybe.title} 🌙`}
-                  {rsvpStatus === 'cant' && `${rsvpOptions.no.title} 🙏`}
-                </span>
-              </div>
-              <div className="rsvp-actions-bar">
-                {rsvpStatus === 'going' && (
-                  <button className="rsvp-action-pill" onClick={downloadCalendarInvite}>
-                    📅 Add to Calendar
-                  </button>
-                )}
-                <button className="rsvp-action-pill" onClick={() => setRsvpStatus(null)}>
-                  Change RSVP
-                </button>
+
+              <div
+                className="wax-seal-badge interactive-stamp"
+                title={`Seal: ${seal.name} (Click to change & react)`}
+                onClick={handleSealClick}
+              >
+                <span>{seal.icon}</span>
               </div>
             </div>
-          )}
-        </div>
 
-        {/* Guest List Social Stack */}
-        <div className="guest-section">
-          <div className="guest-header">
-            <h3 className="guest-title">Who's Joining the Circle</h3>
-            <span className="guest-count">{guestCounts.going} going · {guestCounts.maybe} maybe</span>
-          </div>
-          <div className="guest-avatar-stack">
-            <div className="guest-avatar" style={{ background: '#D4AF37' }}>S</div>
-            <div className="guest-avatar" style={{ background: '#8B5CF6' }}>R</div>
-            <div className="guest-avatar" style={{ background: '#EC4899' }}>M</div>
-            <div className="guest-avatar" style={{ background: '#10B981' }}>K</div>
-            <div className="guest-avatar" style={{ background: '#F59E0B' }}>A</div>
-            <div className="guest-avatar" style={{ background: '#6366F1' }}>P</div>
-            <div className="guest-avatar" style={{ background: '#EF4444' }}>N</div>
-            <div className="guest-avatar guest-avatar-more">+{guestCounts.going - 7}</div>
-          </div>
-          <p className="guest-stalk-hint">👀 Stalk the full guest list ({guestCounts.going} confirmed)</p>
-        </div>
+            {/* Bottom Bar: Mood & Countdown */}
+            <div className="hero-bottom-info">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#fff', fontSize: '0.78rem', fontWeight: 600 }}>
+                <Flame size={14} color="var(--accent-primary)" />
+                <span>{artwork.mood}</span>
+              </div>
 
-        {/* Event Description */}
-        <div className="event-description-section">
-          <h3 className="desc-title">About This Evening</h3>
-          <p className="desc-body">{eventData.description}</p>
-        </div>
-
-        {/* Audio Synthesizer */}
-        <AudioPlayer onPlayToast={onToast} />
-
-        {/* Wall of Blessings */}
-        <div className="comments-section">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h3 className="comments-title">💬 Wall of Blessings</h3>
-            <div className="emoji-reactions-bar">
-              {['✨', '👏', '🫖', '🌹', '💖'].map(emoji => (
-                <button
-                  key={emoji}
-                  className="emoji-reaction-btn"
-                  onClick={() => handleAddComment(`Sent ${emoji} with love`)}
-                  title={`Send ${emoji}`}
-                >
-                  {emoji}
-                </button>
-              ))}
+              <div className="countdown-pill">
+                <span>⏱️ Starts in 4d 6h</span>
+              </div>
             </div>
           </div>
 
-          <div className="comments-list">
-            {comments.map(c => (
-              <div key={c.id} className="comment-item">
-                <div className="comment-avatar" style={{ background: c.color }}>
-                  {c.name.charAt(0)}
-                </div>
-                <div className="comment-content">
-                  <span className="comment-name">{c.name}</span>
-                  <p className="comment-text">{c.text}</p>
-                </div>
-              </div>
+          {/* Magic UI Infinite Marquee Ticker */}
+          <Marquee speed={24} className="party-vibe-marquee">
+            <div className="marquee-item">🪩 LIVE VINYL SELECTORS</div>
+            <span className="marquee-dot">•</span>
+            <div className="marquee-item">🍹 ARTISANAL BAR</div>
+            <span className="marquee-dot">•</span>
+            <div className="marquee-item">⚡ ROOFTOP SOUNDS</div>
+            <span className="marquee-dot">•</span>
+            <div className="marquee-item">🍕 2AM PIZZA RUN</div>
+            <span className="marquee-dot">•</span>
+            <div className="marquee-item">🔥 SECRET VENUE UNLOCKED</div>
+            <span className="marquee-dot">•</span>
+            <div className="marquee-item">🍾 BYOB WELCOME</div>
+            <span className="marquee-dot">•</span>
+          </Marquee>
+
+          {/* Title & Host info */}
+          <div>
+            <h1 className="event-title-shimmer">{eventData.title}</h1>
+            <p className="event-subtitle">{eventData.subtitle}</p>
+
+            <div className="host-badge-row">
+              <div className="host-avatar">🍸</div>
+              <span>Hosted by <strong style={{ color: '#fff' }}>{eventData.host}</strong></span>
+              <span>•</span>
+              <span style={{ color: 'var(--text-accent)' }}>Private Gathering</span>
+            </div>
+          </div>
+
+          {/* Quick Hype Reactions Bar */}
+          <div className="quick-react-bar">
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Send Hype:</span>
+            {['🔥', '🪩', '🍾', '⚡', '🍸', '🍕'].map((emoji, idx) => (
+              <button
+                key={idx}
+                type="button"
+                className="quick-react-btn"
+                onClick={() => triggerReaction(emoji)}
+                title={`Send ${emoji}`}
+              >
+                {emoji}
+              </button>
             ))}
           </div>
 
-          <div className="comment-input-bar">
-            <input
-              type="text"
-              className="comment-input"
-              value={commentInput}
-              onChange={(e) => setCommentInput(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') handleAddComment(); }}
-              placeholder="Send a blessing or message to the host…"
-              maxLength={220}
-            />
+          {/* Quick Details Chips */}
+          <div className="details-chip-grid">
+            <div className="detail-chip">
+              <span className="detail-chip-label">
+                <Calendar size={12} color="var(--accent-primary)" />
+                <span>Date</span>
+              </span>
+              <span className="detail-chip-value">{eventData.date}</span>
+            </div>
+
+            <div className="detail-chip">
+              <span className="detail-chip-label">
+                <Clock size={12} color="var(--accent-secondary)" />
+                <span>Time</span>
+              </span>
+              <span className="detail-chip-value">{eventData.time}</span>
+            </div>
+
+            <div className="detail-chip">
+              <span className="detail-chip-label">
+                <Shirt size={12} color="var(--text-accent)" />
+                <span>Dress Code</span>
+              </span>
+              <span className="detail-chip-value">{dressCode?.title || 'Casual Chic'}</span>
+            </div>
+
+            <div className="detail-chip">
+              <span className="detail-chip-label">
+                <span>🍾</span>
+                <span>Bar & Fuel</span>
+              </span>
+              <span className="detail-chip-value">{eventData.byobNote || 'BYOB & Shared Snacks'}</span>
+            </div>
+          </div>
+
+          {/* Secret Venue Box */}
+          <SecretVenue
+            isUnlocked={selectedStatus === 'yes'}
+            venue={eventData.venue}
+            address={eventData.address}
+            doorCode={eventData.doorCode}
+            notes={eventData.locationNotes}
+          />
+
+          {/* RSVP Choice Section */}
+          <RSVPSection
+            rsvpOptions={rsvpOptions}
+            selectedStatus={selectedStatus}
+            onSelectStatus={onSelectStatus}
+            guestCount={guestCount}
+            onOpenShare={onOpenShare}
+            onTriggerReaction={triggerReaction}
+          />
+
+          {/* Audio Synthesizer Bar */}
+          <AudioPlayer />
+
+          {/* Social Hype Wall */}
+          <HypeWall guests={guests} onAddGuestMessage={onAddGuestMessage} />
+
+          {/* Footer Share Button with Shimmer Sweep */}
+          <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
             <button
-              className="comment-send-btn"
-              onClick={() => handleAddComment()}
-              aria-label="Send blessing"
+              type="button"
+              onClick={onOpenShare}
+              className="btn-primary shimmer-hover"
+              style={{ flex: 1, padding: '10px 16px', fontSize: '0.84rem' }}
             >
-              <Send size={16} />
+              <Share2 size={16} />
+              <span>Share / Add to Calendar</span>
             </button>
           </div>
         </div>
-
-      </div>
-    </SpotlightCard>
+      </SpotlightCard>
+    </div>
   );
 }
