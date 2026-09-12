@@ -1,315 +1,347 @@
-# 🏛️ Mehfil Master Implementation Plan & Architecture Blueprint
-### *A Comprehensive Technical Reference for Building Viral, Real-Time Interactive Invitation Studios*
+# 📋 Universal Blueprint & Reusable Template for Viral Invitation Studios
+### *The Exact "Copy-and-Build" Boilerplate for Weddings, Parties, Mehfils, Galas & Launch Events*
 
-> **Document Name**: `implimentation_plan_maifil.md`  
-> **Reference Repository**: [https://github.com/ghanshamrna27-source/HAVAN](https://github.com/ghanshamrna27-source/HAVAN)  
-> **Inspiration Stack**: Partiful (Social Flow), React Bits (Interactive Micro-effects), Magic UI (Polished Motion), 21st.dev (Crafted UI Sections)
-
----
-
-## 📑 Table of Contents
-1. [Executive Summary & Core Philosophy](#1-executive-summary--core-philosophy)
-2. [High-Level Architecture & Tech Stack](#2-high-level-architecture--tech-stack)
-3. [Split-Screen Live Studio Layout Architecture](#3-split-screen-live-studio-layout-architecture)
-4. [Design System & Thematic Engine](#4-design-system--thematic-engine)
-5. [Atmospheric Visual FX Engine (60fps Canvas)](#5-atmospheric-visual-fx-engine-60fps-canvas)
-6. [Interactive Components (React Bits, Magic UI & 21st.dev)](#6-interactive-components-react-bits-magic-ui--21stdev)
-7. [Host-Customizable RSVP & Acceptance Workflow](#7-host-customizable-rsvp--acceptance-workflow)
-8. [Invitation Embellishment Suite](#8-invitation-embellishment-suite)
-9. [Web Audio API Soundscape Synthesizer](#9-web-audio-api-soundscape-synthesizer)
-10. [Step-by-Step Guide for Replicating on New Web Projects](#10-step-by-step-guide-for-replicating-on-new-web-projects)
-11. [Project File Structure Reference](#11-project-file-structure-reference)
+> **File**: `implimentation_plan_maifil.md`  
+> **Purpose**: A plug-and-play, copy-paste architecture to build high-converting, viral invitation web applications in minutes.
 
 ---
 
-## 1. Executive Summary & Core Philosophy
+## ⚡ The 5-Minute Quick-Clone Formula
 
-The Mehfil platform reimagines event invitations by replacing static flyers and clunky multi-step forms with a **Dual-Pane Real-Time Studio**. 
+Whenever you want to build a new event website (e.g. Wedding, Birthday, Club Night, Tech Launch, Diwali Gala):
 
-### 💎 Core Architectural Principles
-1. **Zero-Modal Simultaneous Preview**: Modals and full-screen drawers disconnect the user from their creation. By pinning a live, interactive preview on the left and full controls on the right, every click or keystroke updates the card simultaneously in real time.
-2. **Atmospheric Immersion**: Visual effects are not mere decorations; they set an emotional tone. The app pairs background ambient aura glows with physics-based canvas particles and real-time synthesized acoustic audio.
-3. **Sender Agency over Guest Experience**: Unlike rigid platforms where RSVP options are fixed to "Yes / Maybe / No", Mehfil empowers the host to customize the button titles, emojis, and subtext (e.g. *"Aana Hi Hai"*, *"Zaroor Aayenge"*).
-4. **Reward-Driven Acceptance**: Accepting an invitation is an emotional high point that triggers confetti, increments dynamic counters, unlocks secret venue data with animated glowing borders, and downloads calendar entries.
+```
+Step 1: Copy this codebase folder to a new directory
+Step 2: Drop your event photos into an assets folder (e.g. `wedding-photos/` or `party-images/`)
+Step 3: Edit 3 simple data files:
+        ├── src/data/artworks.js     <-- Update image paths & tags
+        ├── src/data/themes.js       <-- Customize your 4-6 color palettes
+        └── src/data/decorations.js  <-- Customize wax seals, borders & RSVP reply presets
+Step 4: Run `npm run dev`
+DONE! Your new interactive event studio is live with zero structural coding needed.
+```
 
 ---
 
-## 2. High-Level Architecture & Tech Stack
+## 🏛️ The 5-Layer Architectural Anatomy
+
+Every world-class invitation webpage built with this system has **5 distinct interactive layers**:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                          Vite + React 18 Core                          │
-├──────────────────────────────────┬─────────────────────────────────────┤
-│      Left Pane: Live Preview     │      Right Pane: Design Suite       │
-│  - Sticky Responsive Card        │  - Cover Artwork Selector (15)      │
-│  - Royal Monogram Wax Seal       │  - Customizable RSVP Replies        │
-│  - Shimmer Title & Split Text    │  - Embellishments & Framing Borders │
-│  - Secret Venue Lock / Shine     │  - 6 Heritage Themes                │
-│  - Web Audio Drone Synthesizer   │  - 8 Atmospheric Particle Modes     │
-│  - Blessings Wall & Reactions    │  - Event Copy & Metadata Form       │
-├──────────────────────────────────┴─────────────────────────────────────┤
-│                       Global Background Engines                        │
-│  - Ambient CSS Aura Orbs (GPU Blur)                                    │
-│  - Interactive 60fps Particle Canvas (Mouse Attraction & Deflection)   │
-│  - Canvas Confetti Explosion Engine                                    │
+│ LAYER 1: AMBIENT SENSORY BACKDROP                                     │
+│  - Deep background tone (#060A14 or #0C0806)                          │
+│  - 3 Blurring Aura Orbs (CSS `filter: blur(130px)`) that glide slowly  │
+│  - 60fps Canvas Particle Layer (Stardust, Petals, Embers, Confetti)    │
+├────────────────────────────────────────────────────────────────────────┤
+│ LAYER 2: DUAL-PANE REAL-TIME STUDIO LAYOUT                             │
+│  ┌───────────────────────────────┬──────────────────────────────────┐  │
+│  │ LEFT PANE: STICKY PREVIEW     │ RIGHT PANE: CONTROL SUITE        │  │
+│  │ - Physical Invitation Card    │ - Cover Photo Selector           │  │
+│  │ - Royal Wax Seal / Monogram   │ - Customizable RSVP Replies      │  │
+│  │ - Shimmering Title Text       │ - Framing Borders & Dress Code   │  │
+│  │ - Secret Location Lock/Unlock │ - Color Palette Switcher         │  │
+│  │ - Real Web Audio Synthesizer  │ - Particle FX & Physics Controls │  │
+│  │ - Social Blessings Wall       │ - Event Details Live Form        │  │
+│  └───────────────────────────────┴──────────────────────────────────┘  │
+├────────────────────────────────────────────────────────────────────────┤
+│ LAYER 3: SENDER-CUSTOMIZABLE RSVP REPLIES                              │
+│  - Host edits the Yes, Maybe, and No button emojis, titles, and subs   │
+│  - Buttons on the live card update in real time with two-way binding   │
+├────────────────────────────────────────────────────────────────────────┤
+│ LAYER 4: HIGH-DOPAMINE ACCEPTANCE PIPELINE                             │
+│  - Hardware-accelerated canvas confetti burst on acceptance            │
+│  - Secret venue unlocks with animated glowing gold "Shine Border"      │
+│  - Dynamic number ticker animates guest counts (24 -> 25)              │
+│  - One-click RFC-compliant `.ics` Calendar download                    │
+├────────────────────────────────────────────────────────────────────────┤
+│ LAYER 5: LIVE BROWSER SOUND SYNTHESIS                                  │
+│  - Zero external MP3 files: Browser Web Audio API synthesizes drone,   │
+│    chimes, and chords live with animated wave visualizers               │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 🛠️ Dependencies & Libraries
-- **React 18**: Reactive component tree, unidirectional data flow with two-way input synchronization.
-- **Vite 6**: Instant HMR, fast compilation, asset pipeline.
-- **Lucide React**: Clean, semantic vector icons for navigation, metadata, and controls.
-- **Canvas-Confetti**: Lightweight hardware-accelerated celebration particle bursts.
-- **Web Audio API**: Native browser audio synthesis (zero external audio files needed).
+---
+
+## 📦 Plug-and-Play Preset Packs for Different Event Types
+
+Use these ready-to-use palettes, wax seals, and RSVP reply options for other types of events:
+
+### 1. 💍 Royal Indian Wedding (Shaadi / Sangeet / Mehendi)
+- **Aesthetic**: Royal Crimson, Emerald Velvet, Marigold Gold, Antique Brass.
+- **Theme Palettes**:
+  - `shahi-shaadi`: Deep Crimson `#8B0000`, Marigold Gold `#FFD700`, Dark Mahogany `#1A0A0A`.
+  - `mehendi-green`: Emerald Jade `#0F5132`, Henna Rust `#A0522D`, Raw Silk `#FFF8DC`.
+  - `sangeet-disco`: Midnight Blue `#191970`, Champagne Gold `#F7E7CE`, Magenta Glow `#C71585`.
+- **Wax Seals**: 🦚 *Mor Pankh (Peacock)*, 🪷 *Kamal (Lotus)*, 🐘 *Gajraj (Royal Elephant)*.
+- **Framing Borders**: *Mughal Jali Arch*, *Gold Zari Lace*.
+- **Custom RSVP Reply Presets**:
+  - **Yes**: 💖 *"Baraat Mein Aana Hi Hai"* (Going)
+  - **Maybe**: 🫖 *"Koshish Zaroor Karenge"* (Maybe)
+  - **No**: 🕊️ *"Duaon Mein Saath Hain"* (In Spirit Only)
+- **Soundscape**: Shehnai & Sitar C# Tanpura drone with temple bell harmonics.
 
 ---
 
-## 3. Split-Screen Live Studio Layout Architecture
+### 2. 🎂 Neon Birthday & Club Afterparty
+- **Aesthetic**: Cyberpunk Violet, Neon Magenta, Electric Cyan, Deep Obsidian.
+- **Theme Palettes**:
+  - `cyber-neon`: Neon Pink `#FF1493`, Electric Cyan `#00FFFF`, Dark Violet `#0B0014`.
+  - `golden-hour`: Sunset Amber `#FF8C00`, Warm Coral `#FF4500`, Night Sky `#0A0E17`.
+- **Wax Seals**: ⚡ *Neon Bolt*, 🪩 *Disco Mirrorball*, 🍸 *Martini Glass*.
+- **Framing Borders**: *Cyber Neon Border*, *Glitch Hologram Rim*.
+- **Custom RSVP Reply Presets**:
+  - **Yes**: 🍾 *"Hell Yeah, I'm In!"* (Going)
+  - **Maybe**: 🤔 *"Might Drop By Later"* (Tentative)
+  - **No**: 😴 *"Sleeping In / FOMO"* (Can't Go)
+- **Atmospheric FX**: *Laser Meteors*, *Electric Sparks*, *Neon Bokeh*.
 
-### 📐 Layout Mechanics
+---
+
+### 3. 🚀 Tech Product Launch / VIP Gala
+- **Aesthetic**: Obsidian Black, Titanium White, Electric Indigo, Sleek Minimal Glass.
+- **Theme Palettes**:
+  - `titanium-dark`: Space Black `#090A0F`, Electric Blue `#3B82F6`, Slate `#94A3B8`.
+  - `executive-gold`: Matte Charcoal `#121212`, Champagne `#E5C07B`, Platinum `#F8FAFC`.
+- **Wax Seals**: 🛡️ *Founders Crest*, ✦ *Starlight Monogram*.
+- **Framing Borders**: *Minimal Frosted Glass Line*, *Titanium Rim*.
+- **Custom RSVP Reply Presets**:
+  - **Yes**: 🎟️ *"Confirmed Attendance"* (VIP Access)
+  - **Maybe**: ⏳ *"Waitlist Tentative"* (Pending)
+  - **No**: 💼 *"Regrets / Send Recording"* (Decline)
+- **Soundscape**: Ethereal synth drone (A2 110Hz + E3 165Hz) with clean metallic harmonics.
+
+---
+
+## 💻 Reusable Core Code Snippets (Ready to Copy-Paste)
+
+### A. The Master State Skeleton (`App.jsx`)
+```jsx
+import React, { useState, useEffect } from 'react';
+
+export default function MasterStudio() {
+  const [artwork, setArtwork] = useState(ARTWORKS[0]);
+  const [theme, setTheme] = useState('mystic-sufi');
+  const [effect, setEffect] = useState('stardust');
+  const [density, setDensity] = useState(1);
+  const [speed, setSpeed] = useState(1);
+
+  const [seal, setSeal] = useState(WAX_SEALS[0]);
+  const [framingBorder, setFramingBorder] = useState(FRAMING_BORDERS[0]);
+  const [dressCode, setDressCode] = useState(DRESS_CODES[0]);
+
+  // Host-Customizable RSVP Replies
+  const [rsvpOptions, setRsvpOptions] = useState({
+    yes: { emoji: '✨', title: 'Aana Hi Hai', sub: 'Going' },
+    maybe: { emoji: '🌙', title: 'Dil Hai', sub: 'Maybe' },
+    no: { emoji: '🙏', title: 'Alvida', sub: "Can't Go" }
+  });
+
+  // Event Details Live Two-Way Binding
+  const [eventData, setEventData] = useState({
+    title: 'Event Title Here',
+    subtitle: 'Catchy event hook or spiritual tagline',
+    host: 'Host Name or Collective',
+    date: 'Saturday, October 18',
+    time: '8:00 PM — Late Night',
+    venue: 'Secret Courtyard Venue',
+    description: 'Detailed description of the gathering...',
+    vibeTags: '🕯️ Candlelit, 🫖 Chai, 👘 Ethnic, 🎶 Live Music'
+  });
+
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  return (
+    <div className="studio-container">
+      <div className="studio-layout">
+        {/* Left: Sticky Live Card Preview */}
+        <InviteCard
+          artwork={artwork}
+          theme={theme}
+          seal={seal}
+          framingBorder={framingBorder}
+          dressCode={dressCode}
+          eventData={eventData}
+          rsvpOptions={rsvpOptions}
+        />
+        {/* Right: Design & Customization Suite */}
+        <DesignSuite
+          currentArtwork={artwork}
+          onSelectArtwork={setArtwork}
+          currentTheme={theme}
+          onSelectTheme={setTheme}
+          currentEffect={effect}
+          onSelectEffect={setEffect}
+          rsvpOptions={rsvpOptions}
+          onChangeRsvpOptions={setRsvpOptions}
+          eventData={eventData}
+          onChangeEventData={setEventData}
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+### B. The Spotlight Card Component (`SpotlightCard.jsx`)
+*Drop this component into any project for instant React Bits mouse-tracking radial glow:*
+
+```jsx
+import React, { useRef } from 'react';
+
+export default function SpotlightCard({ children, className = '', ...props }) {
+  const cardRef = useRef(null);
+
+  function handleMouseMove(e) {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    cardRef.current.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+    cardRef.current.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+  }
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      className={`spotlight-card ${className}`}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+```
+
 ```css
-/* Desktop: Dual-Pane Grid */
-.studio-layout {
-  display: grid;
-  grid-template-columns: minmax(380px, 460px) 1fr;
-  gap: 36px;
-  align-items: start;
+/* Accompanying CSS */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 26px;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
 }
 
-/* Sticky Left Preview: Keeps card in view while scrolling long option lists */
-.studio-preview-col {
-  position: sticky;
-  top: 80px;
-  max-height: calc(100vh - 100px);
-  overflow-y: auto;
-  padding-right: 8px;
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--accent-soft),
+    transparent 60%
+  );
+  opacity: 0.75;
+  transition: opacity 0.3s ease;
+  z-index: 1;
 }
 ```
 
-### 📱 Responsive Adaptability (< 1024px)
-On tablets and mobile devices, side-by-side display can cramp viewports. The layout gracefully shifts:
-1. Grid collapses to `1fr`.
-2. A sticky **Mobile View Switcher** (`[📱 Preview Card]` vs `[⚙️ Design Suite]`) appears in the header.
-3. Classes `.mobile-show-preview` and `.mobile-show-editor` toggle visibility seamlessly.
-
 ---
 
-## 4. Design System & Thematic Engine
-
-The visual design system is driven by **CSS Custom Properties (Tokens)** defined at the root and overridden per theme via `data-theme` attributes on the `<body>`.
-
-### 🎨 6 Curated Thematic Palettes
-| Theme ID | Name | Dominant Colors | Emotional Aesthetic |
-|---|---|---|---|
-| `mystic-sufi` | 🌌 Mystic Samaa | Lapis Lazuli `#0B132B`, Gold Leaf `#D4AF37` | Celestial, midnight, divine dervish |
-| `folk-tribal` | 🏺 Folk & Warli | Terracotta `#E85D3A`, Night Rust `#180E0C` | Earthy, ancient tribal, campfire |
-| `psychedelic-retro`| 🪩 Retro Qawwali | Bollywood Fuchsia `#FF2A7A`, Electric Teal `#00F5D4` | 70s vinyl pop-art, vibrant energy |
-| `contemporary-minimal`| 🍃 Jade & Silk | Forest Emerald `#1B493A`, Silk Jade `#4ADE80` | Serene, modern, minimalist classical |
-| `noor-kashmir` | 🌙 Noor-e-Kashmir | Royal Amethyst `#8B5CF6`, Rose Champagne `#F472B6` | Poetic, regal, mountain twilight |
-| `desert-caravan` | 🏜️ Desert Caravan | Amber Flame `#F59E0B`, Dune Bronze `#B45309` | Warm bonfire, desert baithak |
-
-### 🔮 Ambient Aura Orbs (Background Glow)
-Three large floating pseudo-spheres with `filter: blur(130px)` and gentle multi-axis keyframe animations (`auraFloat1`, `auraFloat2`, `auraFloat3`) run in the background. Changing the theme dynamically updates `--aura-1`, `--aura-2`, and `--aura-3` CSS variables with smooth 1.2s color blending.
-
----
-
-## 5. Atmospheric Visual FX Engine (60fps Canvas)
-
-Implemented in `src/components/ParticlesCanvas.jsx`, the particle engine runs independently on an un-opinionated `<canvas>` layer.
-
-### 🌟 8 FX Modes
-1. **Cosmic Stardust**: Golden twinkling stars with 4-point light crosses and **cursor gravitational pull** (particles gently orbit mouse pointer).
-2. **Lantern Embers**: Rising warm amber coals with horizontal wobble turbulence, temperature decay, and cursor repulsion.
-3. **Sufi Rose Petals**: Velvet rose petals tumbling in 3D using `scale(1, Math.sin(flip))` for perspective rotation.
-4. **Shooting Stars / Meteors**: Diagonal high-speed streaks with glowing ion gradient tails and random cooldown timers.
-5. **Mystic Bokeh**: Large, dreamy out-of-focus luminous discs with pulsing alpha.
-6. **Aurora Rays**: Sinuous undulating horizontal northern-lights waves blended using `ctx.globalCompositeOperation = 'screen'`.
-7. **Mogra / Jasmine Blossoms**: Five-petal white blossoms with golden pistil centers rotating in wind.
-8. **Kinetic Soundwaves**: Expanding concentric harmonic sonic rings that radiate outwards.
-
-### 🎚️ FX Physics Tuning
-- **Density Multiplier**: `0.5` (Subtle, 30 particles), `1.0` (Standard, 60 particles), `1.8` (Euphoric, 110 particles).
-- **Speed Multiplier**: `0.5` (Zen slow-drift), `1.0` (Normal physics), `1.7` (Vivid motion).
-
----
-
-## 6. Interactive Components (React Bits, Magic UI & 21st.dev)
-
-### A. Spotlight Card (`SpotlightCard.jsx`)
-*Inspired by React Bits*
-Tracks the user's cursor over the card element and updates CSS variables `--mouse-x` and `--mouse-y`. An overlay pseudo-element renders a soft 600px radial gradient that illuminates glass borders and textures as the cursor glides across.
-
-### B. Shine Border & Border Beam
-*Inspired by Magic UI*
-Applied to:
-- The secret location card once unlocked (`.shine-border`).
-- Confirmed RSVP state badge.
-Uses conic gradients and keyframe pulsing shadows to create an animated traveling beam of light signaling achievement.
-
-### C. Live Shimmer Text
-*Inspired by Magic UI*
-The event title headline utilizes a 200% background gradient with `-webkit-background-clip: text` and infinite horizontal translation to produce an elegant golden light sweep.
-
-### D. 3D Tilt Gallery Thumbnails
-*Inspired by React Bits*
-In the artwork gallery, thumbnail cards calculate cursor offset from center to apply `perspective(500px) rotateX(...) rotateY(...) scale(1.05)` for a tactile physical gallery feel.
-
----
-
-## 7. Host-Customizable RSVP & Acceptance Workflow
-
-### 💡 Core Innovation
-Standard event platforms enforce rigid labels. Mehfil gives the host **direct control over reply semantics**:
+### C. Live Web Audio Synthesizer Engine (`AudioPlayer.jsx`)
+*Zero external MP3 audio files. Synthesizes warm chords live in the browser:*
 
 ```javascript
-// Default State in App.jsx
-const [rsvpOptions, setRsvpOptions] = useState({
-  yes: { emoji: '✨', title: 'Aana Hi Hai', sub: 'Going' },
-  maybe: { emoji: '🌙', title: 'Dil Hai', sub: 'Maybe' },
-  no: { emoji: '🙏', title: 'Alvida', sub: "Can't Go" }
-});
-```
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const ctx = new AudioContext();
 
-### 🛠️ Editor Suite Controls (Tab 2: RSVP Options)
-- **Presets Strip**: 1-click loading of thematic presets (*Sufi Baithak*, *Royal Courtyard*, *Classic Party*, *Ghazal & Shayari*).
-- **Live Form Inputs**:
-  - Positive Reply (Yes): Emoji input + Primary title + Sublabel.
-  - Tentative Reply (Maybe): Emoji input + Primary title + Sublabel.
-  - Decline Reply (No): Emoji input + Primary title + Sublabel.
-- As the host types, the RSVP buttons on the left card **update in real time**.
+const master = ctx.createGain();
+master.gain.setValueAtTime(0.35, ctx.currentTime);
 
-### 🎊 Acceptance Execution Pipeline (When Guest Clicks Yes)
-1. **Confetti Launch**: Canvas confetti bursts with custom thematic colors (`#D4AF37`, `#FFD700`, `#FF2A7A`, `#00F5D4`).
-2. **Venue Unlock**: Secret location changes from `📍 RSVP to unlock secret venue` to `📍 Venue Unlocked! The Haveli Courtyard...` with an animated golden Shine Border.
-3. **Guest Count Increment**: Live counter smoothly animates from `24 going` to `25 going`.
-4. **State Morphing**: RSVP buttons collapse and render the confirmed acceptance checkmark with the host's custom reply wording.
-5. **Add to Calendar**: Generates and downloads a pre-formatted RFC-compliant `.ics` iCalendar file for Google, Apple, and Outlook calendars.
-
----
-
-## 8. Invitation Embellishment Suite
-
-### 1. Royal Wax Seals & Monogram Stamps
-Embossed in the top-right corner of the invitation cover artwork:
-- ☽ **Noor Crescent**: Gold seal with celestial glow.
-- 🦚 **Mor Pankh**: Peacock feather badge of devotion.
-- 🪷 **Kamal Lotus**: Blooming lotus flower seal.
-- 👑 **Shahi Crest**: Royal Mughal imperial monogram.
-- 🕯️ **Sufi Chirag**: Eternal flame stamp.
-
-### 2. Framing Borders
-Applied dynamically to the card container:
-- **Gold Filigree**: Dual-layered golden lace border with corner accents.
-- **Mughal Jali**: Traditional geometric arch lattice motif.
-- **Glass Line**: Ultra-clean frosted glass edge with high-transparency blur.
-- **Cyber Neon**: Pulsing iridescent dual-tone glow (Magenta/Cyan).
-
-### 3. Dress Code Suggestion Guide
-Displays a pill badge directly under event metadata:
-- *Royal White Kurtas & Chikan* (Traditional Baithak)
-- *Velvet Shawls & Pashmina* (Winter Gathering)
-- *Vibrant Festive Ethnic* (Celebration)
-- *Soulful Bohemian / Linen* (Relaxed Baithak)
-
----
-
-## 9. Web Audio API Soundscape Synthesizer
-
-Rather than requiring heavy, copyright-restricted external MP3 files, Mehfil synthesizes an acoustic Tanpura drone **live in the browser** (`AudioPlayer.jsx`):
-
-### 🎼 Acoustic Synthesis Blueprint
-```javascript
-// C#3 Root Fundamental + G#3 Fifth + C#4 Octave
-const notes = [
-  { freq: 138.59, type: 'sawtooth', gain: 0.18 },
-  { freq: 138.59, type: 'sine', gain: 0.25 },
-  { freq: 207.65, type: 'triangle', gain: 0.14 },
-  { freq: 277.18, type: 'sine', gain: 0.10 }
-];
-
-// Low-pass acoustic wood filter
+// Warm acoustic lowpass filter
 const filter = ctx.createBiquadFilter();
 filter.type = 'lowpass';
 filter.frequency.setValueAtTime(460, ctx.currentTime);
+master.connect(filter);
+filter.connect(ctx.destination);
 
-// LFO chorused vibrato for natural wooden resonance
-const lfo = ctx.createOscillator();
-lfo.frequency.value = 0.25; // 0.25 Hz slow breath
-lfo.connect(osc.frequency);
-```
-- **Visualizer**: 16 animated wave bars pulse in sync with the audio state.
-- **Meditation Bell**: A high-frequency A5 (880 Hz) exponential decay chime rings out on RSVP confirmation.
+// Harmonic Chord Frequencies (Root C#3 138.59Hz + Fifth G#3 207.65Hz + Octave C#4 277.18Hz)
+const frequencies = [138.59, 207.65, 277.18];
+frequencies.forEach(freq => {
+  const osc = ctx.createOscillator();
+  osc.type = 'sawtooth';
+  osc.frequency.value = freq;
+  
+  // Gentle slow vibrato breath (0.2 Hz)
+  const lfo = ctx.createOscillator();
+  const lfoGain = ctx.createGain();
+  lfo.frequency.value = 0.2;
+  lfoGain.gain.value = 0.8;
+  lfo.connect(osc.frequency);
+  lfo.start();
 
----
-
-## 10. Step-by-Step Guide for Replicating on New Web Projects
-
-To create a new project (e.g. Wedding, Birthday, Corporate Gala, Concert) using this blueprint:
-
-### Step 1: Initialize Project
-```bash
-npx create-vite my-invitation-studio --template react
-cd my-invitation-studio
-npm install lucide-react canvas-confetti
-```
-
-### Step 2: Establish Design Tokens (`src/index.css`)
-1. Define `:root` with CSS custom properties for deep background, glass card surfaces, accent glow, and text hierarchy.
-2. Define `data-theme` blocks for each curated palette (e.g. `wedding-luxury`, `party-neon`, `nature-rustic`).
-3. Set up the dual-pane grid layout:
-   ```css
-   .studio-layout {
-     display: grid;
-     grid-template-columns: minmax(380px, 460px) 1fr;
-     gap: 36px;
-   }
-   ```
-
-### Step 3: Create Media & Decor Data (`src/data/`)
-1. Create `artworks.js`: Array of image paths with titles, tags, and recommended default themes.
-2. Create `decorations.js`: Wax seals, framing borders, dress codes, and RSVP presets.
-3. Create `themes.js`: Color palettes, swatches, and accent colors.
-
-### Step 4: Build Core Components (`src/components/`)
-1. `ParticlesCanvas.jsx`: Hardware-accelerated canvas background.
-2. `SpotlightCard.jsx`: Mouse-following radial glow wrapper.
-3. `AudioPlayer.jsx`: Web Audio API tone generator.
-4. `InviteCard.jsx`: Sticky left-side live preview card with custom RSVP buttons.
-5. `DesignSuite.jsx`: Right-side tabbed control center with category filters and input fields.
-
-### Step 5: Wire Two-Way State in `App.jsx`
-- Maintain top-level state for `artwork`, `theme`, `effect`, `seal`, `framingBorder`, `dressCode`, `rsvpOptions`, and `eventData`.
-- Pass state down to `InviteCard` and updater functions down to `DesignSuite`.
-- Watch changes appear **simultaneously in real time**!
-
----
-
-## 11. Project File Structure Reference
-
-```
-d:/GB Tech/Partiful/music webpage/
-├── index.html                   # Mounts React root (<div id="root">)
-├── package.json                 # React 18, Vite, Lucide-React, Canvas-Confetti
-├── vite.config.js               # Vite server config (port 3000)
-├── README.md                    # Public GitHub documentation
-├── implimentation_plan_maifil.md# This comprehensive master blueprint
-├── Sufi-music/                  # 15 High-res artwork images (img1.jpeg - img16.jpeg)
-└── src/
-    ├── main.jsx                 # React DOM root entry
-    ├── index.css                # Global tokens, studio grid, glassmorphism, themes
-    ├── App.jsx                  # Master studio coordinator & layout state
-    ├── data/
-    │   ├── artworks.js          # 15 artworks with category & theme metadata
-    │   ├── decorations.js       # Wax seals, framing borders, dress codes, presets
-    │   └── themes.js            # 6 heritage color palettes
-    └── components/
-        ├── InviteCard.jsx       # Left sticky live card preview
-        ├── DesignSuite.jsx      # Right tabbed design & customization suite
-        ├── ParticlesCanvas.jsx  # 60fps canvas particles (8 modes)
-        ├── SpotlightCard.jsx    # React Bits mouse-following spotlight glow
-        └── AudioPlayer.jsx      # Web Audio API Tanpura drone synthesizer
+  osc.connect(master);
+  osc.start();
+});
 ```
 
 ---
 
-*This document serves as the master technical and architectural standard for the Mehfil Invitation Studio. Refer to this specification when extending features or scaffolding new interactive event platforms.*
+### D. Hardware-Accelerated Confetti Burst
+*Instant dopamine feedback on acceptance:*
+```javascript
+import confetti from 'canvas-confetti';
+
+function triggerAcceptanceConfetti() {
+  confetti({
+    particleCount: 120,
+    spread: 70,
+    origin: { y: 0.6 },
+    colors: ['#D4AF37', '#FFD700', '#FF2A7A', '#00F5D4', '#8B5CF6', '#FFFFFF']
+  });
+}
+```
+
+---
+
+### E. Calendar Event Generation (.ics RFC-compliant file)
+*Instant download of ready-to-import calendar file without needing a backend:*
+```javascript
+function downloadCalendarFile(event) {
+  const icsData = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//EventStudio//Universal Invitation//EN',
+    'BEGIN:VEVENT',
+    'SUMMARY:' + event.title,
+    'DESCRIPTION:' + event.description.replace(/\n/g, ' '),
+    'LOCATION:' + event.venue,
+    'DTSTART:20261018T143000Z',
+    'DTEND:20261018T203000Z',
+    'STATUS:CONFIRMED',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+
+  const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.setAttribute('download', `${event.title.toLowerCase().replace(/\s+/g, '-')}.ics`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+```
+
+---
+
+## 🎯 Verification Checklist for New Cloned Projects
+
+Before launching your cloned project, verify:
+- [ ] Left column stays sticky when scrolling long option menus on desktop (1440px+).
+- [ ] Typing in any right-hand input updates the left-hand card simultaneously with zero lag.
+- [ ] Changing RSVP reply titles updates the 3 buttons on the card in real time.
+- [ ] Clicking the Positive Reply (Yes) button launches confetti and unlocks the venue card with an animated gold Shine Border.
+- [ ] Mobile view switcher tabs toggle properly between card preview and design controls on small screens (< 1024px).
+- [ ] Web Audio synthesizer plays smoothly without console errors or audio clipping.
+
+---
+
+*Keep this file as your master reusable template plate whenever you or your team scaffold a new viral invitation web project!*
