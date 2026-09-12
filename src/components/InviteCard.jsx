@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SpotlightCard from './SpotlightCard';
 import AudioPlayer from './AudioPlayer';
-import { Calendar, Clock, MapPin, Lock, Check, Send } from 'lucide-react';
+import { Calendar, Clock, MapPin, Lock, Check, Send, Sparkles, Heart, Coffee, Flower2, Flame } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function InviteCard({
@@ -289,14 +289,20 @@ export default function InviteCard({
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 className="comments-title">💬 Wall of Blessings</h3>
             <div className="emoji-reactions-bar">
-              {['✨', '👏', '🫖', '🌹', '💖'].map(emoji => (
+              {[
+                { emoji: '✨', icon: <Sparkles size={16} strokeWidth={1.5} /> },
+                { emoji: '👏', icon: <Heart size={16} strokeWidth={1.5} /> },
+                { emoji: '🫖', icon: <Coffee size={16} strokeWidth={1.5} /> },
+                { emoji: '🌹', icon: <Flower2 size={16} strokeWidth={1.5} /> },
+                { emoji: '💖', icon: <Heart size={16} strokeWidth={1.5} /> }
+              ].map(reaction => (
                 <button
-                  key={emoji}
+                  key={reaction.emoji}
                   className="emoji-reaction-btn"
-                  onClick={() => handleAddComment(`Sent ${emoji} with love`)}
-                  title={`Send ${emoji}`}
+                  onClick={() => handleAddComment(`Sent ${reaction.emoji} with love`)}
+                  title={`Send ${reaction.emoji}`}
                 >
-                  {emoji}
+                  {reaction.icon}
                 </button>
               ))}
             </div>

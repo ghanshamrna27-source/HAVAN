@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ARTWORKS } from '../data/artworks';
 import { THEMES } from '../data/themes';
 import { WAX_SEALS, FRAMING_BORDERS, DRESS_CODES, RSVP_PRESETS } from '../data/decorations';
-import { Palette, Sparkles, MessageSquareHeart, Award, Edit3, Image as ImageIcon } from 'lucide-react';
+import { Palette, Sparkles, MessageSquareHeart, Award, Edit3, Image as ImageIcon, Flame, Flower2, Star, Moon, Music, XCircle } from 'lucide-react';
 
 export default function DesignSuite({
   currentArtwork,
@@ -35,12 +35,12 @@ export default function DesignSuite({
     : ARTWORKS.filter(a => a.category === artCategory);
 
   const TABS = [
-    { id: 'artwork', label: 'Cover Art', icon: <ImageIcon size={16} /> },
-    { id: 'rsvp', label: 'RSVP Options', icon: <MessageSquareHeart size={16} /> },
-    { id: 'decorations', label: 'Seals & Borders', icon: <Award size={16} /> },
-    { id: 'themes', label: 'Themes', icon: <Palette size={16} /> },
-    { id: 'effects', label: 'Visual FX', icon: <Sparkles size={16} /> },
-    { id: 'copy', label: 'Edit Copy', icon: <Edit3 size={16} /> }
+    { id: 'artwork', label: 'Cover Art', icon: <ImageIcon size={16} strokeWidth={1.5} /> },
+    { id: 'rsvp', label: 'Scene Hai?', icon: <MessageSquareHeart size={16} strokeWidth={1.5} /> },
+    { id: 'decorations', label: 'Seals & Borders', icon: <Award size={16} strokeWidth={1.5} /> },
+    { id: 'themes', label: 'Themes', icon: <Palette size={16} strokeWidth={1.5} /> },
+    { id: 'effects', label: 'Visual FX', icon: <Sparkles size={16} strokeWidth={1.5} /> },
+    { id: 'copy', label: 'Event Info', icon: <Edit3 size={16} strokeWidth={1.5} /> }
   ];
 
   return (
@@ -114,7 +114,7 @@ export default function DesignSuite({
         <div className="editor-card">
           <div className="editor-card-header">
             <div>
-              <h3 className="editor-title">2. Customizable RSVP Reply Options</h3>
+              <h3 className="editor-title">2. Customizable 'Scene Hai?' Options</h3>
               <p className="editor-subtitle">
                 As the invitation sender, customize the exact replies guests see and click for Yes, Maybe, and No.
               </p>
@@ -154,17 +154,10 @@ export default function DesignSuite({
               </div>
               <div className="rsvp-inputs-row">
                 <div className="form-group emoji-col">
-                  <label className="form-label">Emoji</label>
-                  <input
-                    type="text"
-                    className="form-input emoji-input"
-                    value={rsvpOptions.yes.emoji}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      yes: { ...rsvpOptions.yes, emoji: e.target.value }
-                    })}
-                    maxLength={4}
-                  />
+                  <label className="form-label">Icon</label>
+                  <div className="form-input emoji-input" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {rsvpOptions.yes.emoji}
+                  </div>
                 </div>
                 <div className="form-group flex-1">
                   <label className="form-label">Button Title</label>
@@ -202,17 +195,10 @@ export default function DesignSuite({
               </div>
               <div className="rsvp-inputs-row">
                 <div className="form-group emoji-col">
-                  <label className="form-label">Emoji</label>
-                  <input
-                    type="text"
-                    className="form-input emoji-input"
-                    value={rsvpOptions.maybe.emoji}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      maybe: { ...rsvpOptions.maybe, emoji: e.target.value }
-                    })}
-                    maxLength={4}
-                  />
+                  <label className="form-label">Icon</label>
+                  <div className="form-input emoji-input" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {rsvpOptions.maybe.emoji}
+                  </div>
                 </div>
                 <div className="form-group flex-1">
                   <label className="form-label">Button Title</label>
@@ -250,17 +236,10 @@ export default function DesignSuite({
               </div>
               <div className="rsvp-inputs-row">
                 <div className="form-group emoji-col">
-                  <label className="form-label">Emoji</label>
-                  <input
-                    type="text"
-                    className="form-input emoji-input"
-                    value={rsvpOptions.no.emoji}
-                    onChange={(e) => onChangeRsvpOptions({
-                      ...rsvpOptions,
-                      no: { ...rsvpOptions.no, emoji: e.target.value }
-                    })}
-                    maxLength={4}
-                  />
+                  <label className="form-label">Icon</label>
+                  <div className="form-input emoji-input" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {rsvpOptions.no.emoji}
+                  </div>
                 </div>
                 <div className="form-group flex-1">
                   <label className="form-label">Button Title</label>
@@ -293,7 +272,7 @@ export default function DesignSuite({
 
           </div>
           <p className="rsvp-helper-hint">
-            💡 As you type or pick a preset above, the RSVP buttons on your invitation card to the left update simultaneously in real time.
+            💡 As you type or pick a preset above, the Scene Hai? buttons on your invitation card to the left update simultaneously in real time.
           </p>
         </div>
       )}
@@ -356,7 +335,7 @@ export default function DesignSuite({
               {DRESS_CODES.map(d => (
                 <button
                   key={d.id}
-                  className={`deco-btn ${d.id === currentDressCode.id ? 'active' : ''}`}
+                  className={`deco-btn ${currentDressCode && d.id === currentDressCode.id ? 'active' : ''}`}
                   onClick={() => onSelectDressCode(d)}
                 >
                   <span className="deco-icon">{d.emoji}</span>
@@ -415,15 +394,15 @@ export default function DesignSuite({
 
           <div className="effect-list">
             {[
-              { id: 'stardust', name: 'Cosmic Stardust', emoji: '✨' },
-              { id: 'embers', name: 'Lantern Embers', emoji: '🕯️' },
-              { id: 'petals', name: 'Sufi Rose Petals', emoji: '🌹' },
-              { id: 'meteors', name: 'Shooting Stars', emoji: '🌠' },
-              { id: 'bokeh', name: 'Mystic Bokeh', emoji: '🫧' },
-              { id: 'aurora', name: 'Aurora Rays', emoji: '🌌' },
-              { id: 'jasmine', name: 'Mogra Blossoms', emoji: '🌸' },
-              { id: 'soundwaves', name: 'Sound Waves', emoji: '⚡' },
-              { id: 'none', name: 'Off / Clean', emoji: '🚫' }
+              { id: 'stardust', name: 'Cosmic Stardust', emoji: <Sparkles size={16} strokeWidth={1.5} /> },
+              { id: 'embers', name: 'Lantern Embers', emoji: <Flame size={16} strokeWidth={1.5} /> },
+              { id: 'petals', name: 'Sufi Rose Petals', emoji: <Flower2 size={16} strokeWidth={1.5} /> },
+              { id: 'meteors', name: 'Shooting Stars', emoji: <Star size={16} strokeWidth={1.5} /> },
+              { id: 'bokeh', name: 'Mystic Bokeh', emoji: <Moon size={16} strokeWidth={1.5} /> },
+              { id: 'aurora', name: 'Aurora Rays', emoji: <Sparkles size={16} strokeWidth={1.5} /> },
+              { id: 'jasmine', name: 'Mogra Blossoms', emoji: <Flower2 size={16} strokeWidth={1.5} /> },
+              { id: 'soundwaves', name: 'Sound Waves', emoji: <Music size={16} strokeWidth={1.5} /> },
+              { id: 'none', name: 'Off / Clean', emoji: <XCircle size={16} strokeWidth={1.5} /> }
             ].map(fx => (
               <button
                 key={fx.id}
@@ -470,7 +449,7 @@ export default function DesignSuite({
                     className={`fx-pill-toggle ${speed === s.val ? 'active' : ''}`}
                     onClick={() => onSelectSpeed(s.val)}
                   >
-                    {d.label || s.label}
+                    {s.label}
                   </button>
                 ))}
               </div>

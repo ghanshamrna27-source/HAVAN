@@ -1920,3 +1920,32 @@ body {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* ========================================================
+   Glassmorphism Updates
+   ======================================================== */
+.editor-card,
+.comments-section,
+.audio-player {
+  background: rgba(20, 25, 40, 0.45) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.editor-card {
+  margin-bottom: 24px;
+}
+
+.comment-item {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.form-input, .form-textarea, .comment-input {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+

@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bombay Deco, refracted — visual direction for havan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;700&family=Unbounded:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#1C2A4B;      /* Jodhpur night */
+    --indigo-deep:#111A32;
+    --sand:#E6D5AE;        /* Jaisalmer stone, day base */
+    --sand-deep:#D3BC8A;
+    --brass:#C0922E;       /* deco bronze + haldi */
+    --verdigris:#4E8B7C;   /* oxidised copper + Jaipur green gate */
+    --rani:#D23C78;        /* rani pink, rationed */
+    --chrome:#C9CFD6;      /* wedge-era steel */
+    --ink:#19140F;
+    --display:'Clash Display','Unbounded',Georgia,serif;
+    --text:'Mukta','Segoe UI',system-ui,sans-serif;
+    --chamfer: polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--sand);color:var(--ink);font-family:var(--text);font-size:17px;line-height:1.55}
+  h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.05;margin:0}
+  h1{font-size:clamp(44px,7vw,96px);letter-spacing:-.01em}
+  h2{font-size:clamp(28px,3.4vw,42px);margin-bottom:18px}
+  h3{font-size:22px;margin-bottom:6px}
+  p{margin:0 0 14px;max-width:62ch}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  section{padding:72px 0;border-top:2px solid var(--ink)}
+  section:first-of-type{border-top:0}
+
+  /* hero */
+  .hero{background:var(--indigo);color:var(--sand);padding:64px 0 56px;position:relative;overflow:hidden}
+  .hero .wrap{position:relative;z-index:1}
+  .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:end}
+  .hero .kicker{font-size:18px;color:var(--brass);margin-bottom:22px}
+  .hero p{font-size:19px;color:#D9CCB0;max-width:54ch}
+  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(90px,16vw,200px);letter-spacing:-.04em;line-height:.85;color:var(--sand);position:relative;display:inline-block}
+  .wordmark small{display:block;font-family:var(--text);font-weight:300;font-size:18px;letter-spacing:.02em;color:var(--brass);margin-top:14px}
+  .wordmark .hin{font-family:var(--text);font-weight:500;font-size:clamp(40px,7vw,86px);color:var(--brass);letter-spacing:0;line-height:1;margin-left:.15em;vertical-align:baseline}
+  .stepwell-bg{position:absolute;inset:0;opacity:.14;pointer-events:none}
+
+  /* thesis */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+  .lead{font-size:22px;line-height:1.4;font-weight:400}
+
+  /* boards */
+  .boards{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--ink);border:2px solid var(--ink)}
+  .board{background:var(--sand);padding:22px 20px 26px;display:flex;flex-direction:column;gap:10px}
+  .board h3{font-size:19px}
+  .board .keep,.board .drop{font-size:15px;line-height:1.45}
+  .board .keep b,.board .drop b{display:block;font-weight:700;margin-bottom:2px}
+  .board .drop{color:#6F6252}
+  .swatchline{display:flex;gap:4px;height:12px;margin:2px 0 6px}
+  .swatchline i{flex:1}
+
+  /* palette */
+  .palette{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border:2px solid var(--ink)}
+  .chip{padding:120px 14px 14px;color:var(--sand);font-size:14px;line-height:1.3;position:relative}
+  .chip b{display:block;font-family:var(--display);font-weight:500;font-size:18px;margin-bottom:2px}
+  .chip.dark{color:var(--ink)}
+  .modes{display:grid;grid-template-columns:1fr 1fr;gap:2px;border:2px solid var(--ink);background:var(--ink);margin-top:20px}
+  .mode{padding:26px 24px}
+  .mode h3{margin-bottom:10px}
+  .mode.day{background:var(--sand)}
+  .mode.night{background:var(--indigo);color:var(--sand)}
+  .mode.night h3{color:var(--brass)}
+  .rule{font-size:15px;color:#5B4F40;max-width:70ch}
+  .night .rule{color:#B9AC93}
+
+  /* type */
+  .spec{border:2px solid var(--ink);padding:28px 26px;margin-bottom:16px;display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
+  .spec .meta{font-size:15px;line-height:1.45;color:#5B4F40}
+  .spec .meta b{display:block;color:var(--ink);font-family:var(--display);font-weight:500;font-size:20px;margin-bottom:6px}
+  .s-display{font-family:var(--display);font-weight:500;font-size:clamp(34px,5vw,64px);line-height:1;letter-spacing:-.02em}
+  .s-display span{display:block}
+  .s-display .w6{font-weight:600}
+  .s-display .w4{font-weight:400}
+  .s-text{font-size:19px;max-width:58ch}
+  .s-text .hi{font-weight:500}
+  .s-num{font-family:var(--display);font-weight:600;font-size:56px;letter-spacing:-.03em;line-height:1}
+  .s-num small{font-family:var(--text);font-weight:400;font-size:16px;letter-spacing:0;margin-left:8px}
+  .alt{font-size:15px;color:#5B4F40;margin-top:8px;max-width:70ch}
+
+  /* motifs */
+  .motifs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .motif{border:2px solid var(--ink)}
+  .motif .art{height:220px;background:var(--indigo);display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .motif .art.light{background:var(--sand-deep)}
+  .motif .txt{padding:18px 18px 22px}
+  .motif p{font-size:15px;margin-bottom:0;max-width:none}
+
+  /* components */
+  .demo{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+  .card{background:var(--indigo);color:var(--sand);padding:30px 28px 26px;clip-path:var(--chamfer);position:relative}
+  .card .when{font-size:15px;color:var(--brass);margin-bottom:8px}
+  .card h3{font-size:34px;line-height:1;margin-bottom:8px;font-weight:600;letter-spacing:-.02em}
+  .card .where{font-size:16px;color:#C6B99B;margin-bottom:18px}
+  .card .hosts{display:flex;gap:6px;align-items:center;font-size:15px;color:#C6B99B;margin-bottom:22px}
+  .card .hosts i{width:26px;height:26px;background:var(--verdigris);clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px);display:inline-block}
+  .card .hosts i:nth-child(2){background:var(--brass)}
+  .btn{display:inline-block;font-family:var(--display);font-weight:600;font-size:18px;padding:14px 26px;border:0;cursor:pointer;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);background:var(--brass);color:var(--ink);text-decoration:none}
+  .btn.ghost{background:transparent;color:var(--sand);box-shadow:inset 0 0 0 2px var(--sand)}
+  .btn.rani{background:var(--rani);color:var(--sand)}
+  .btn:focus-visible{outline:3px solid var(--verdigris);outline-offset:3px}
+  .steps{display:flex;gap:3px;margin:18px 0 4px}
+  .steps i{flex:1;height:10px;background:#2E3D62;display:block}
+  .steps i.on{background:var(--brass)}
+  .cap{font-size:13px;color:#B9AC93}
+  .gate-note{font-size:15px;color:#5B4F40;max-width:60ch}
+  .states{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+  .state{border:2px solid var(--ink);padding:14px 16px;font-size:15px;min-width:190px}
+  .state b{font-family:var(--display);font-weight:500;display:block;font-size:18px;margin-bottom:4px}
+
+  /* voice + rules */
+  .voice{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .lines{list-style:none;padding:0;margin:0}
+  .lines li{padding:12px 0;border-bottom:1px solid var(--sand-deep);font-size:18px}
+  .lines li em{font-style:normal;color:#5B4F40;font-size:15px;display:block;margin-top:2px}
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--ink);border:2px solid var(--ink)}
+  .rules div{background:var(--sand);padding:22px 20px}
+  .rules ul{margin:0;padding-left:18px;font-size:16px}
+  .rules li{margin-bottom:8px}
+  footer{padding:40px 0 60px;font-size:14px;color:#5B4F40}
+
+  @media (max-width:900px){
+    .hero-grid,.two,.demo,.voice,.modes,.rules{grid-template-columns:1fr}
+    .boards{grid-template-columns:1fr 1fr}
+    .palette{grid-template-columns:repeat(3,1fr)}
+    .motifs{grid-template-columns:1fr}
+    .spec{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){.boards{grid-template-columns:1fr}.palette{grid-template-columns:1fr 1fr}}
+  @media (prefers-reduced-motion:no-preference){
+    .gate-doors{transition:transform .9s cubic-bezier(.7,0,.2,1)}
+    .gate:hover .door-l{transform:translateX(-46px)}
+    .gate:hover .door-r{transform:translateX(46px)}
+    .gate:hover .glow{opacity:1}
+    .glow{transition:opacity .9s}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <svg class="stepwell-bg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <pattern id="sw" width="120" height="120" patternUnits="userSpaceOnUse">
+        <path d="M0 120 L0 90 L30 90 L30 60 L60 60 L60 30 L90 30 L90 0 L120 0 L120 120 Z" fill="#E6D5AE"/>
+        <path d="M0 90 L30 90 L30 60 L60 60 L60 30 L90 30 L90 0" fill="none" stroke="#C0922E" stroke-width="2"/>
+      </pattern>
+    </defs>
+    <rect width="1200" height="600" fill="url(#sw)"/>
+  </svg>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">Visual direction for the party app, distilled from four team boards</div>
+        <h1>Bombay Deco, refracted</h1>
+        <p style="margin-top:22px">Mumbai holds the second-largest collection of Art Deco buildings in the world, and they were built by Indians who folded chhatris and jharokhas into the style. Two of the four boards were already describing the same city. The other two supply how it should feel today: fractured like a cubist still life, and lit like a 1970s idea of the future.</p>
+      </div>
+      <div>
+        <div class="wordmark">havan<span class="hin">हवन</span><small>Wordmark test. The Devanagari reads as a second voice, not a translation.</small></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<section>
+  <div class="two">
+    <div>
+      <h2>What the boards have in common</h2>
+      <p class="lead">Every board is about a threshold. Deco doorways and sunburst grilles. Jaipur's Lotus Gate, jharokhas, stepwell descents. Cubism cuts a room into planes you can only enter with your eye. The wedge cars are literally doors opening upward. A party app is the same object: something you are either let into or not.</p>
+    </div>
+    <div>
+      <p>So the identity is built on one idea, the gate, and one geometry, the step. Stepped ziggurats, cubist facets, Pana Meena ka Kund and the wedge profile of a Stratos Zero are all the same shape at different scales. That shape becomes the pattern, the corner treatment, the progress bar and the loading state. Nothing else needs to be invented.</p>
+      <p>It also answers the brief's tension. "Fun but not completely approachable" is what a good door does. Warm light behind it, but you still need someone to open it. Which is exactly the vouch model.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>What each board contributes, and what gets left out</h2>
+  <div class="boards">
+    <div class="board">
+      <h3>Art Deco</h3>
+      <div class="swatchline"><i style="background:#19140F"></i><i style="background:#C0922E"></i><i style="background:#4E8B7C"></i><i style="background:#E6D5AE"></i></div>
+      <div class="keep"><b>Keep</b>Stepped facades, sunburst fans, bronze and verdigris, stained glass, the black lacquer Rolls, the Vogue fashion-plate flatness.</div>
+      <div class="drop"><b>Drop</b>Gatsby gold-on-black, chandeliers, anything that says "1920s themed night". That's a costume, not a brand.</div>
+    </div>
+    <div class="board">
+      <h3>Cubism &amp; Futurism</h3>
+      <div class="swatchline"><i style="background:#8A7A5E"></i><i style="background:#5E6C7A"></i><i style="background:#B87A3A"></i><i style="background:#3A5A6B"></i></div>
+      <div class="keep"><b>Keep</b>Overlapping translucent planes, the muted umber-and-slate palette, the still-life subjects: bottles, glasses, guitars, fruit bowls. Delaunay's circles as the one burst of colour. Depero and Boccioni for motion.</div>
+      <div class="drop"><b>Drop</b>Impressionism, which barely appears on the board anyway. Literal reproductions of Picasso. Faceting people's faces.</div>
+    </div>
+    <div class="board">
+      <h3>Subcontinent whimsical</h3>
+      <div class="swatchline"><i style="background:#1C2A4B"></i><i style="background:#D23C78"></i><i style="background:#F0A11C"></i><i style="background:#4E8B7C"></i></div>
+      <div class="keep"><b>Keep</b>The gates and cusped arches, stepwells, Jodhpur indigo walls, haldi and ochre plaster, Raghubir Singh's colour, truck-art confidence with lettering, marigold as an accent.</div>
+      <div class="drop"><b>Drop</b>Wes Anderson pastels, "Incredible India" symmetry, Rajasthani costume shots. Those are approachable. We are not doing approachable.</div>
+    </div>
+    <div class="board">
+      <h3>Indian retro-future</h3>
+      <div class="swatchline"><i style="background:#C9CFD6"></i><i style="background:#E0632B"></i><i style="background:#2B3C7A"></i><i style="background:#6B4A2E"></i></div>
+      <div class="keep"><b>Keep</b>The wedge profile, chamfered corners instead of rounded, chrome as a highlight material, sunset gradient light, Syd Mead's confidence that tomorrow will be glamorous. Omni-cover typography.</div>
+      <div class="drop"><b>Drop</b>Cars as subject. There is nothing Indian on this board yet; the Indian part comes from combining it with the other three.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Colour</h2>
+  <p>Six colours, two of them bases. Not a cream-and-terracotta system, and not black with one neon. The bases are materials: Jodhpur night and Jaisalmer stone. Rani pink is rationed to one use per screen, or it stops meaning anything.</p>
+  <div class="palette">
+    <div class="chip" style="background:#1C2A4B"><b>Jodhpur night</b>#1C2A4B<br>Night base, event pages, anything after 6pm</div>
+    <div class="chip dark" style="background:#E6D5AE"><b>Jaisalmer stone</b>#E6D5AE<br>Day base, discovery, settings, reading surfaces</div>
+    <div class="chip dark" style="background:#C0922E"><b>Brass</b>#C0922E<br>Primary action, wordmark on night, dates</div>
+    <div class="chip" style="background:#4E8B7C"><b>Verdigris</b>#4E8B7C<br>Confirmed, vouched, going. Focus rings.</div>
+    <div class="chip" style="background:#D23C78"><b>Rani</b>#D23C78<br>One thing per screen: the live moment, the new invite</div>
+    <div class="chip dark" style="background:#C9CFD6"><b>Chrome</b>#C9CFD6<br>Hairlines, dividers, disabled, the retro-future edge</div>
+  </div>
+  <div class="modes">
+    <div class="mode day">
+      <h3>Day</h3>
+      <p class="rule">Stone base, ink type, brass and verdigris doing the work. Feels like a courtyard at 11am. Used for browsing what's around you and for anything administrative.</p>
+    </div>
+    <div class="mode night">
+      <h3>Night</h3>
+      <p class="rule">Indigo base, stone type, brass for the wordmark and the one action that matters. Feels like standing outside the door. Every event page lives here regardless of the phone's setting.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Type</h2>
+  <p>Two families, clearly different jobs. The display face carries the Deco and the wedge; the text face carries India, because it sets Latin and Devanagari as siblings, so a line can switch language without switching font.</p>
+
+  <div class="spec">
+    <div class="meta"><b>Clash Display</b>Display, headlines, event names, the wordmark. Weights 400 to 700. Free, from Fontshare. Geometric with a stepped feel in the S, C and G that rhymes with the pattern.</div>
+    <div class="s-display">
+      <span class="w6">Aditi's rooftop thing</span>
+      <span>Saturday, doors at nine</span>
+      <span class="w4">Bandra West, closer once you're in</span>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="meta"><b>Mukta</b>Body, UI, captions, and every Hindi word. Weights 300 to 700. Free, Google Fonts. Latin and Devanagari drawn together by the same hand, so हवन and havan sit at the same optical weight.</div>
+    <div>
+      <p class="s-text">Kabir vouched for you, so you're in. The exact address unlocks after you RSVP. Bring something to drink, and <span class="hi">don't bring anyone we haven't met</span>. Chalo.</p>
+      <p class="s-text" style="font-weight:300">Nine people going. Four more from your circle haven't answered yet.</p>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="meta"><b>Numbers</b>Set in Clash at 600, tightened. Dates and counts are the most-read thing on an invite, so they get display treatment rather than a monospaced label.</div>
+    <div><div class="s-num">27 Sep<small>doors at 21:00</small></div><div class="s-num" style="margin-top:10px">14<small>going</small></div></div>
+  </div>
+
+  <p class="alt">If Clash reads too polite once it's in the product, the harder alternative is Unbounded (Google Fonts): wider, more Omni-magazine, more retro-future. Test both on the wordmark before committing. Avoid the obvious Deco faces (Poiret One, Limelight, Broadway); they are the costume the Art Deco board is warning against.</p>
+</section>
+
+<section>
+  <h2>Signature motifs</h2>
+  <p>Three, all derived from the step. Use them structurally: as pattern, as progress, as the one animation. Never as decoration sprinkled around.</p>
+  <div class="motifs">
+    <div class="motif">
+      <div class="art">
+        <svg viewBox="0 0 360 220" width="100%" height="100%" aria-hidden="true">
+          <defs><pattern id="sw2" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M0 60 L0 45 L15 45 L15 30 L30 30 L30 15 L45 15 L45 0 L60 0 L60 60 Z" fill="#26375E"/>
+            <path d="M0 45 L15 45 L15 30 L30 30 L30 15 L45 15 L45 0" fill="none" stroke="#C0922E" stroke-width="1.5"/>
+          </pattern></defs>
+          <rect width="360" height="220" fill="url(#sw2)"/>
+        </svg>
+      </div>
+      <div class="txt"><h3>The stepwell</h3><p>Pana Meena ka Kund flattened into a repeat. It is a Jaipur stepwell, a Deco ziggurat and a cubist grid at once. Use at low contrast as surface texture, at full contrast as the loading state, and one row of it as the RSVP progress bar.</p></div>
+    </div>
+    <div class="motif">
+      <div class="art gate" style="cursor:pointer">
+        <svg viewBox="0 0 360 220" width="100%" height="100%" aria-hidden="true">
+          <defs>
+            <radialGradient id="warm" cx="50%" cy="60%" r="55%"><stop offset="0" stop-color="#F0A11C" stop-opacity=".9"/><stop offset="1" stop-color="#F0A11C" stop-opacity="0"/></radialGradient>
+            <clipPath id="arch"><path d="M120 220 V110 Q120 60 180 46 Q240 60 240 110 V220 Z"/></clipPath>
+          </defs>
+          <rect class="glow" width="360" height="220" fill="url(#warm)" opacity="0"/>
+          <g clip-path="url(#arch)">
+            <rect class="gate-doors door-l" x="120" y="46" width="60" height="180" fill="#E6D5AE"/>
+            <rect class="gate-doors door-r" x="180" y="46" width="60" height="180" fill="#E6D5AE"/>
+            <path class="gate-doors door-l" d="M150 60 v150 M136 90 h14 M136 130 h14" stroke="#C0922E" stroke-width="2" fill="none"/>
+            <path class="gate-doors door-r" d="M210 60 v150 M210 90 h14 M210 130 h14" stroke="#C0922E" stroke-width="2" fill="none"/>
+          </g>
+          <path d="M120 220 V110 Q120 60 180 46 Q240 60 240 110 V220" fill="none" stroke="#C0922E" stroke-width="3"/>
+          <g stroke="#C0922E" stroke-width="2" fill="none">
+            <path d="M180 40 V14"/><path d="M162 44 L150 20"/><path d="M198 44 L210 20"/><path d="M146 54 L126 34"/><path d="M214 54 L234 34"/>
+          </g>
+        </svg>
+      </div>
+      <div class="txt"><h3>The gate</h3><p>A cusped Jaipur arch with a Deco sunburst over it. Closed for events you can't see into; it opens once when your RSVP lands, and that is the only page-load animation in the product. Hover the tile.</p></div>
+    </div>
+    <div class="motif">
+      <div class="art light">
+        <svg viewBox="0 0 360 220" width="100%" height="100%" aria-hidden="true">
+          <g opacity=".92">
+            <polygon points="70,200 110,60 150,200" fill="#1C2A4B" opacity=".85"/>
+            <rect x="130" y="80" width="70" height="120" fill="#4E8B7C" opacity=".8"/>
+            <circle cx="215" cy="130" r="48" fill="#C0922E" opacity=".85"/>
+            <polygon points="180,200 250,50 300,200" fill="#D23C78" opacity=".55"/>
+            <rect x="60" y="150" width="240" height="14" fill="#19140F" opacity=".9"/>
+            <polygon points="240,110 320,100 300,170" fill="#C9CFD6" opacity=".7"/>
+          </g>
+        </svg>
+      </div>
+      <div class="txt"><h3>The still life</h3><p>Party objects, never party people. Bottle, glass, guitar, plate of fruit, an auto-rickshaw seen through a window, cut into overlapping translucent planes. This is the illustration language for empty states, onboarding and the share card.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>In the product</h2>
+  <div class="demo">
+    <div>
+      <div class="card">
+        <div class="when">Sat 27 Sep, doors at nine</div>
+        <h3>Aditi's rooftop thing</h3>
+        <div class="where">Bandra West. Exact building once you're in.</div>
+        <div class="hosts"><i></i><i></i> Hosted by Aditi and Kabir</div>
+        <div class="steps"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="cap">14 of 20. Kabir vouched for you.</div>
+        <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn" href="#">I'm coming</a>
+          <a class="btn ghost" href="#">Can't make it</a>
+        </div>
+      </div>
+      <p class="gate-note" style="margin-top:14px">Chamfered corners everywhere a rounded corner would normally go: cards, buttons, avatars, inputs. It is the single cheapest way to make the whole product feel like this and not like every other app. The two-corner chamfer (top-left and bottom-right) is the wedge; a four-corner chamfer is the ziggurat, reserved for the share card.</p>
+    </div>
+    <div>
+      <h3>State language</h3>
+      <div class="states">
+        <div class="state"><b>Behind the gate</b>You can see the name, date and neighbourhood. Nothing else. Indigo, closed arch.</div>
+        <div class="state"><b>Vouched</b>Someone let you in. Verdigris tick, gate opens once.</div>
+        <div class="state"><b>Going</b>Address unlocked, calendar invite sent. Brass.</div>
+        <div class="state"><b>Live now</b>The one rani-pink thing on the screen. Only during the event.</div>
+        <div class="state"><b>Full</b>Stepwell bar complete, action becomes "Ask the host". Chrome.</div>
+        <div class="state"><b>Empty</b>Still-life illustration and one line: "Nothing near you yet. Host something."</div>
+      </div>
+      <h3 style="margin-top:28px">Share card</h3>
+      <p class="gate-note">The WhatsApp preview is the real front door, so it gets the most care: night base, four-corner chamfer, stepwell texture at 8% opacity, event name in Clash 600, the neighbourhood and nothing more. It should look like a ticket you can't buy.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Voice</h2>
+  <div class="voice">
+    <div>
+      <p>Lowkey, specific, slightly withholding. Sentence case always. Short lines. Hinglish where a Hindi word is the natural one, never as garnish. The product speaks like the friend who knows the host, not like the host and not like a venue.</p>
+      <p>The identity withholds visually, so the copy doesn't have to try to be cool. It can just be clear.</p>
+    </div>
+    <ul class="lines">
+      <li>Kabir vouched for you, so you're in.<em>Not "Congratulations! You've been invited!"</em></li>
+      <li>Exact address once you RSVP.<em>Not "Location will be revealed to confirmed guests."</em></li>
+      <li>Fourteen going. Six spots.<em>Not "Hurry, only 6 spots left!"</em></li>
+      <li>Nothing near you yet. Host something.<em>Not "It's a little quiet around here 😔"</em></li>
+      <li>Chalo.<em>The only place an exclamation of any kind is allowed, and it doesn't get a mark.</em></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Rules that keep it cohesive</h2>
+  <div class="rules">
+    <div>
+      <h3>Always</h3>
+      <ul>
+        <li>Event pages on the night base, no matter the device setting.</li>
+        <li>Chamfers, never radii. 14px on cards, 10px on buttons, 6px on avatars.</li>
+        <li>Brass for the one primary action per screen. If there are two, one of them isn't primary.</li>
+        <li>The stepwell as texture at 8 to 14% opacity, never louder unless it's the loader.</li>
+        <li>Devanagari set in Mukta at the same size and weight as the Latin beside it.</li>
+        <li>Two-pixel ink borders on the day base instead of shadows.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Never</h3>
+      <ul>
+        <li>Photos of people in the brand layer. People appear only as guests' own uploads inside an event.</li>
+        <li>Gradients as decoration. The one gradient is the warm glow behind the gate.</li>
+        <li>Rani pink on more than one element per screen.</li>
+        <li>Pastels, cream, confetti, emoji in system copy, exclamation marks.</li>
+        <li>Rounded pill buttons, soft grey drop shadows, glassmorphism.</li>
+        <li>Deco fonts with names like Broadway. Deco is in the shapes, not the lettering.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>Distilled from the art deco, cubism and impressionism, subcontinent whimsical and Indian retro-future boards, 9 and 10 September 2026. Fonts referenced: Clash Display (Fontshare), Mukta and Unbounded (Google Fonts). If the specimens above render in a fallback face, the font links are blocked in this viewer; open the file in a browser.</footer>
+
+</div>
+</body>
+</html>
